@@ -60,7 +60,11 @@ def _select(candidates: list[Candidate], gap_values: dict[str, int], critical: s
             scored.append((score, candidate.event["event_id"], candidate, main_skill))
         score, _, candidate, main_skill = max(scored, key=lambda value: (value[0], value[1]))
         remaining.remove(candidate)
-        if score < 0.05:
+        # Every candidate reaching selection is eligible and closes a real weighted
+        # target gap, so the only worthless score is a non-positive one. An absolute
+        # floor would starve high-gap employees, whose per-event gap_value is small
+        # because it is normalised by their (large) total remaining gap.
+        if score <= 0.0:
             break
         selected.append((candidate, score))
         if main_skill:

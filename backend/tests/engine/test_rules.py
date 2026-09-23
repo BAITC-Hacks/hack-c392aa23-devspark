@@ -87,3 +87,30 @@ def test_remote_employee_gets_offline_fit_penalty():
     employee = {**dataset().employees["E1"], "work_format": "remote"}
     ds = dataset(event("EV_OFFLINE", format="offline"), employee=employee)
     assert candidate(ds, "EV_OFFLINE").fit == 0.56
+
+
+def test_high_gap_employee_still_gets_recommendation_below_old_floor():
+    """Regression: an employee with many open gaps has a small per-event gap_value
+    (normalised by their large total gap). An eligible event that closes a real gap
+    must still be recommended, even though its score sits under the retired 0.05 floor."""
+
+    required = {f"SK_{i}": 3 for i in range(15)}
+    skills = {key: {"skill_id": key, "name": key, "type": "hard", "category": "test"} for key in required}
+    employee = {
+        "employee_id": "E1", "full_name": "High Gap", "department": "D", "role": "Engineer",
+        "grade": "Junior", "manager_id": None, "hire_date": "2025-01-01", "tenure_months": 21,
+        "work_format": "office", "preferred_language": "en", "career_goal": None,
+        "skills": {key: 1 for key in required}, "last_review_date": "2026-09-01",
+    }
+    profiles = {
+        ("Engineer", "Junior"): {"role": "Engineer", "grade": "Junior", "required_skills": {key: 1 for key in required}, "critical_skills": []},
+        ("Engineer", "Middle"): {"role": "Engineer", "grade": "Middle", "required_skills": required, "critical_skills": []},
+    }
+    ev = event("EV_ONE", skill="SK_0", gain=1, cap=3)
+    ds = Dataset(meta={"as_of_date": AS_OF}, proficiency_scale={}, skills=skills, role_profiles=profiles,
+                 employees={"E1": employee}, events={"EV_ONE": ev}, history=[])
+    picked = candidate(ds, "EV_ONE")
+    assert picked.eligible and 0 < picked.base_score < 0.05
+    result = recommend(ds, "E1")
+    assert [rec.event_id for rec in result.recommendations] == ["EV_ONE"]
+    assert result.empty_reason is None
