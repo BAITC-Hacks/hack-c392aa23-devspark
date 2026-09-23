@@ -102,3 +102,11 @@ def test_calling_a_non_critical_skill_critical_is_rejected(monkeypatch, ds):
     result = decide.ai_recommendation(ds, "E0028")
     assert client.chat.completions.calls == 2  # the overclaim was rejected and retried
     assert result is not None and "critical" not in result.recommendations[0].rationale.lower()
+
+
+def test_no_retry_when_the_time_budget_is_spent(monkeypatch, ds):
+    bad = {"picks": [{"event_id": "EV_NOPE", "rationale": "x", "factors_used": ["target_gap", "availability", "format_fit"]}], "not_recommended": [], "summary": "s"}
+    client = _install(monkeypatch, [bad, bad])
+    monkeypatch.setenv("LLM_BUDGET_S", "0.5")  # first call already exceeds the budget
+    assert decide.ai_recommendation(ds, "E0028") is None  # falls back to rules
+    assert client.chat.completions.calls == 1  # and does not spend time on a retry

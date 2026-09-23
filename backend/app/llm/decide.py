@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 import re
 from time import perf_counter
 from typing import Any
@@ -55,9 +56,20 @@ def _validate(data: dict[str, Any], candidate_ids: list[str], factor_kinds: dict
     return None
 
 
-def _call(client, messages: list[dict[str, str]]) -> dict[str, Any]:
+def _budget_s() -> float:
+    """Total time the AI path may take, retry included (the case allows 10 s)."""
+    try:
+        return float(os.environ.get("LLM_BUDGET_S", "9"))
+    except ValueError:
+        return 9.0
+
+
+MIN_RETRY_S = 2.5  # a retry with less time than this would likely time out anyway
+
+
+def _call(client, messages: list[dict[str, str]], timeout: float) -> dict[str, Any]:
     response = client.chat.completions.create(
-        model=model_name(), messages=messages, temperature=0,
+        model=model_name(), messages=messages, temperature=0, timeout=max(1.0, timeout),
         response_format={"type": "json_schema", "json_schema": {"name": "recommendations", "schema": RESPONSE_SCHEMA, "strict": True}},
     )
     return json.loads(response.choices[0].message.content)
@@ -85,11 +97,16 @@ def ai_recommendation(ds: Dataset, employee_id: str, lang: str | None = None) ->
     ]
     data: dict[str, Any] | None = None
     try:
-        data = _call(client, messages)
+        budget = _budget_s()
+        data = _call(client, messages, timeout=budget)
         error = _validate(data, candidate_ids, built["factor_kinds_by_event"])
         if error:
+            remaining = budget - (perf_counter() - started)
+            if remaining < MIN_RETRY_S:  # no time for a safe retry: serve rules instead
+                logger.warning("LLM output invalid for %s and no time left to retry: %s", employee_id, error)
+                return None
             messages.append({"role": "user", "content": f"Your previous answer was invalid: {error} Fix it and return valid JSON."})
-            data = _call(client, messages)
+            data = _call(client, messages, timeout=remaining)
             error = _validate(data, candidate_ids, built["factor_kinds_by_event"])
             if error:
                 logger.warning("LLM output invalid after retry for %s: %s", employee_id, error)
