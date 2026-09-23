@@ -98,8 +98,41 @@ class CareerStore:
 
         self._load_directory(self.data_dir)
         self._load_directory(self.data_dir / "extra")
+        self._load_directory(self.data_dir / "test_profiles")
         self._load_directory(self.runtime_dir)
-        self.engine_dataset = _engine_dataset(self.data_dir)
+        self._sync_engine_dataset()
+
+    def _sync_engine_dataset(self) -> None:
+        """Rebuild A's engine Dataset from this store so imports and completions
+        are visible to the recommender. The store is the single source of truth."""
+
+        try:
+            module = importlib.import_module("app.engine.dataset")
+        except ModuleNotFoundError:
+            self.engine_dataset = None
+            return
+        dataset_cls = getattr(module, "Dataset", None)
+        if dataset_cls is None:
+            self.engine_dataset = None
+            return
+        role_profiles = {
+            (item["role"], item["grade"]): item
+            for item in self.role_profiles
+            if item.get("role") and item.get("grade")
+        }
+        history = sorted(
+            self.history,
+            key=lambda row: (str(row["date"]), str(row["employee_id"]), str(row["event_id"])),
+        )
+        self.engine_dataset = dataset_cls(
+            meta={"as_of_date": self.as_of_date.isoformat()},
+            proficiency_scale=self.proficiency_scale,
+            skills=self.skills,
+            role_profiles=role_profiles,
+            employees=self.employees,
+            events=self.events,
+            history=history,
+        )
 
     def _load_directory(self, directory: Path) -> None:
         if not directory.exists():
@@ -176,6 +209,7 @@ class CareerStore:
         ActivityHistoryRecord.model_validate(row)
         self.history.append(row)
         self.persist_history(row)
+        self._sync_engine_dataset()
         return row
 
     def add_not_now(self, employee_id: str, event_id: str) -> None:
@@ -208,6 +242,7 @@ class CareerStore:
                     self._import_json(filename, content, added, updated, errors)
             except (UnicodeDecodeError, csv.Error, json.JSONDecodeError) as exc:
                 errors.append({"file": filename, "row": None, "message": f"invalid file: {exc}"})
+        self._sync_engine_dataset()
         return {"added": added, "updated": updated, "errors": errors}
 
     def _import_json(
