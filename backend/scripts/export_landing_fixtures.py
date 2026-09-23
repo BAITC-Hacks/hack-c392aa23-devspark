@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT / "backend"))
 LANGS = ("en", "ru", "kk")
 LANG_NAMES = {"en": "English", "ru": "Russian", "kk": "Kazakh"}
 HERO_ID, TRAP_ID = "E0028", "E9001"
-PEOPLE = [("E0028", "case_example"), ("E0112", "speaking_trap"), ("E9003", "cross_role")]
+PEOPLE = [("E0028", "case_example"), ("E9001", "speaking_trap"), ("E9003", "cross_role")]
 NEGATIVE = {"declined", "no_show", "dropped"}
 
 

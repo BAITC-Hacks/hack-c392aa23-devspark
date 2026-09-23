@@ -96,8 +96,8 @@
           "Повышает Leadership 1 → 2",
           "Senior нуждается в Stakeholder Management 2 (у вас 1)",
           "Повышает Stakeholder Management 1 → 2",
-          "Похожие мероприятия: 0 выполнено, 1 отклонено или пропущено",
-          "Онлайн: вы выполнили 50% прошлых",
+          "Похожие мероприятия: 0 завершено, 1 отклонено или пропущено",
+          "Онлайн: вы завершили 50% прошлых",
           "Следующая сессия 2026-10-08"
         ],
         "kk": [
@@ -209,9 +209,9 @@
           "Next session 2026-11-23"
         ],
         "ru": [
-          "Senior needs System Design 4 (you have 2) · critical",
+          "Senior требует System Design 4 (у вас 2) · критично",
           "Повышает System Design 2 → 3",
-          "Senior needs API Design 4 (you have 2) · critical",
+          "Senior требует API Design 4 (у вас 2) · критично",
           "Повышает API Design 2 → 3",
           "Пока нет истории с похожими активностями",
           "Онлайн: пока нет истории с этим форматом",
@@ -223,7 +223,7 @@
           "Senior үшін API Design 4 қажет (сізде 2 бар) · critical",
           "API Design 2 → 3 деңгейін көтереді",
           "Ұқсас іс-шаралар бойынша әлі тарих жоқ",
-          "Онлайн: осы формат бойынша әлі тарих жоқ",
+          "Онлайн: осы форматта әлі тарих жоқ",
           "Келесі сессия 2026-11-23"
         ]
       }
@@ -430,8 +430,8 @@
             "low readiness (48%) after 4+ years"
           ],
           "ru": [
-            "1 просроченный обязательный элемент(ы)",
-            "нет выполненной добровольной активности за 6 месяцев",
+            "1 просроченный обязательный элемент",
+            "за последние 6 месяцев не выполнено ни одной добровольной активности",
             "низкая готовность (48%) после 4+ лет"
           ],
           "kk": [
@@ -453,10 +453,10 @@
       "tag": "case_example"
     },
     {
-      "employee_id": "E0112",
-      "full_name": "Sergey Lebedev",
-      "role": "Customer Support Specialist",
-      "grade": "Senior",
+      "employee_id": "E9001",
+      "full_name": "Trap PublicSpeaking",
+      "role": "Backend Engineer",
+      "grade": "Middle",
       "tag": "speaking_trap"
     },
     {
@@ -474,8 +474,8 @@
     "history": 2743,
     "traps_passed": 8,
     "traps_total": 8,
-    "rules_ms": 2.2,
-    "ai_ms": 4024,
+    "rules_ms": 2.1,
+    "ai_ms": 5452,
     "model": "gpt-4.1-mini"
   }
 }
