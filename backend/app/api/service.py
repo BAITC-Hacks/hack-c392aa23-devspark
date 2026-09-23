@@ -197,3 +197,14 @@ def apply_activity(store: CareerStore, employee_id: str, event_id: str, action: 
             if to_level != from_level:
                 changes.append({"skill_id": gain["skill_id"], "from": from_level, "to": to_level})
     return ProgressUpdate.model_validate({"record": row, "skills_changed": changes, "readiness_before": before, "readiness_after": after_profile.readiness.pct, "recommendations": fallback_recommend(store, employee_id)})
+
+
+def ask(store: CareerStore, employee_id: str, question: str, lang: str | None = None) -> dict[str, Any]:
+    """Grounded Q&A over A's engine facts; templated fallback without a key."""
+    if store.engine_dataset is not None:
+        try:
+            from app.llm.qa import answer_question
+            return answer_question(store.engine_dataset, employee_id, question, lang)
+        except ModuleNotFoundError:
+            pass
+    return {"answer": "Ask your manager or HR for guidance on your development plan.", "generated_by": "rules", "model": None, "latency_ms": 0}

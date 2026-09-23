@@ -309,3 +309,15 @@ class ImportReport(ApiModel):
     added: ImportCounts
     updated: ImportCounts
     errors: list[ImportError]
+
+
+class AskRequest(ApiModel):
+    question: str
+    lang: str | None = None
+
+
+class AskResponse(ApiModel):
+    answer: str
+    generated_by: Literal["llm", "rules"]
+    model: str | None = None
+    latency_ms: int = 0

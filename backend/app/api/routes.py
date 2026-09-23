@@ -26,6 +26,8 @@ from app.models import (
     ProgressUpdate,
     RecommendationMode,
     RecommendationResult,
+    AskRequest,
+    AskResponse,
 )
 from app.store import CareerStore
 
@@ -108,6 +110,15 @@ def update_activity(
         return service.apply_activity(store, employee_id, payload.event_id, payload.action)
     except KeyError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Activity not found") from None
+
+
+@router.post("/employees/{employee_id}/ask", response_model=AskResponse)
+def ask_question(
+    employee_id: str, payload: AskRequest, store: Store, _: Principal = Depends(require_self_or_hr)
+) -> AskResponse:
+    if not store.employee(employee_id):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Employee not found")
+    return AskResponse.model_validate(service.ask(store, employee_id, payload.question, payload.lang))
 
 
 @router.get("/catalog", response_model=Catalog)
