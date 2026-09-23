@@ -24,3 +24,7 @@
   .timeline { @apply mt-5; }.timeline-row { @apply relative flex gap-3 border-l border-line pb-5 pl-5 last:border-0 last:pb-0; }.status-dot { @apply absolute -left-1.5 top-1 h-3 w-3 rounded-full; }.status-completed { @apply bg-pine; }.status-declined,.status-dropped { @apply bg-amber-400; }.timeline-row b { @apply text-sm; }.timeline-row p { @apply mt-1 text-xs text-slate-500; }.timeline-row > .pill { @apply ml-auto shrink-0; }
   .completion { @apply relative mt-6 flex flex-wrap items-center justify-between gap-5 rounded-2xl bg-[#e2f3e7] p-5; }.completion h2 { @apply mt-2 text-lg font-semibold; }.completion p { @apply mt-1 text-sm text-[#3b6656]; }.completion-score { @apply flex items-baseline gap-2; }.completion-score s { @apply text-slate-500; }.completion-score b { @apply text-3xl text-pine; }.completion-score span { @apply text-xs text-slate-500; }.completion > button { @apply absolute right-3 top-2 text-xl text-[#487663]; }.notice { @apply mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700; }.loading,.center-message { @apply grid min-h-screen place-content-center gap-5 bg-mist text-center text-slate-500; }.loader { @apply mx-auto h-8 w-8 animate-spin rounded-full border-4 border-line border-t-pine; }
 }
+
+.lang-switch { display: inline-flex; gap: 2px; padding: 2px; background: var(--mist, #f3f7f5); border-radius: 9px; }
+.lang-chip { padding: 3px 8px; font-size: 11px; font-weight: 600; color: #64748b; border-radius: 7px; letter-spacing: .02em; }
+.lang-chip-active { background: #fff; color: #17352d; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
