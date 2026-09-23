@@ -1,4 +1,4 @@
-import type { AuthSession, DemoPerson, Grade, HrOverview, ImportReport, Profile, ProgressUpdate, RecommendationResult, Role } from './types'
+import type { AskResponse, AuthSession, DemoPerson, Grade, HrOverview, ImportReport, Profile, ProgressUpdate, RecommendationResult, Role } from './types'
 import { aiRecommendations, people, profile, progress, rulesRecommendations } from '../mocks/fixtures'
 
 const mock = import.meta.env.VITE_MOCK === '1'
@@ -17,6 +17,7 @@ export const api = {
   people: () => mock ? Promise.resolve(people) : request<DemoPerson[]>('/api/demo/people'),
   profile: (id: string) => mock ? Promise.resolve({ ...profile, employee: { ...profile.employee, employee_id: id } }) : request<Profile>(`/api/employees/${id}`),
   recommendations: async (id: string, mode: 'rules' | 'ai', lang?: string) => { if (mock) { await wait(mode === 'ai' ? 800 : 90); return mode === 'ai' ? aiRecommendations : rulesRecommendations } return request<RecommendationResult>(`/api/employees/${id}/recommendations?mode=${mode}${lang ? `&lang=${lang}` : ''}`) },
+  ask: (id: string, question: string, lang?: string) => request<AskResponse>(`/api/employees/${id}/ask`, { method: 'POST', body: JSON.stringify({ question, lang }) }),
   hrOverview: (department?: string) => request<HrOverview>(`/api/hr/overview${department ? `?department=${encodeURIComponent(department)}` : ''}`),
   hrEmployees: (q?: string) => request<{ employee_id: string; full_name: string; role: string; grade: Grade; empty_reason?: string }[]>(`/api/hr/employees${q ? `?q=${encodeURIComponent(q)}` : ''}`),
   importFiles: async (files: File[]) => {

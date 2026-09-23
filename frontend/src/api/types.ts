@@ -18,3 +18,5 @@ export type Catalog = { skills: { skill_id: string; name: string; type: string; 
 export type HrOverview = { lagging_skills: { skill_id: string; name: string; employees_below: number; avg_gap: number; critical_count: number }[]; no_step: { employee_id: string; full_name: string; role: string; grade: Grade; reason_code: string; hint: string }[]; participation: { event_id: string; title: string; type: string; completed: number; no_show: number; declined: number; dropped: number; overdue: number; completion_rate: number; avg_rating: number | null; flagged: boolean }[]; disengaged: { employee_id: string; full_name: string; negatives_6m: number; completions_6m: number }[] }
 export type ImportReport = { added: ImportCounts; updated: ImportCounts; errors: { file: string; row: number; message: string }[] }
 export type ImportCounts = { employees: number; history: number; events: number; skills: number }
+
+export type AskResponse = { answer: string; generated_by: 'llm' | 'rules'; model: string | null; latency_ms: number }
