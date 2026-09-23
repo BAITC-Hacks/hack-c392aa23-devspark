@@ -145,6 +145,26 @@ export function HrPage({ onSignOut }: { onSignOut: () => void }) {
             <p className="mt-4 text-xs text-slate-400">Private HR signal. Talk first — this is not a ranking, and it is never shown to employees.</p>
           </section>
 
+          {/* Attrition risk */}
+          <section className="card">
+            <p className="eyebrow">Retention</p>
+            <h2 className="section-title">Attrition risk ({data.attrition_risk.length})</h2>
+            {data.attrition_risk.length === 0 ? <p className="mt-4 text-sm text-slate-500">No elevated attrition risk right now.</p> : (
+              <ul className="mt-4 space-y-3 text-sm">
+                {data.attrition_risk.slice(0, 8).map((person) => (
+                  <li key={person.employee_id} className="border-b border-line/70 pb-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-ink">{person.full_name} <small className="text-slate-500">· {person.role} · {person.grade}</small></span>
+                      <span className={`pill ${person.level === 'high' ? 'pill-amber' : 'pill-slate'}`}>{person.level} · {person.risk}</span>
+                    </div>
+                    <p className="mt-1 text-slate-500">{person.reasons.join(' · ')}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <p className="mt-3 text-xs text-slate-400">Explainable signal for a supportive conversation — never a ranking or an automated decision.</p>
+          </section>
+
           {/* Import */}
           <section className="card">
             <p className="eyebrow">Evaluation</p>
