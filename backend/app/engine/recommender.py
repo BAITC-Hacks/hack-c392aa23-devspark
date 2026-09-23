@@ -159,41 +159,89 @@ def profile(ds: Dataset, employee_id: str) -> Profile:
     )
 
 
-def recommend(ds: Dataset, employee_id: str, k: int = 3, mode: Literal["rules", "ai"] = "rules", lang: str | None = None) -> RecommendationResult:
-    """Generate explainable deterministic recommendations (AI is layered elsewhere)."""
+def _build_recommendation(ds: Dataset, employee: Json, candidate: Candidate, rank: int, score: float, after_pct: float, levels, target: Target, gap_values: dict[str, int], lang: str | None) -> Recommendation:
+    """Assemble one explained Recommendation. Shared by rules and AI selection so
+    both paths carry identical factors, gains and readiness projections."""
 
-    started = perf_counter()
+    return Recommendation(
+        rank=rank, event_id=candidate.event["event_id"], title=candidate.event["title"], type=candidate.event["type"],
+        format=candidate.event["format"], duration_hours=float(candidate.event["duration_hours"]), next_session=candidate.next_session,
+        score=round(score, 6), factors=_factor_list(ds, candidate, levels, target, gap_values),
+        expected_gains=[ExpectedGain(skill_id=skill_id, **{"from": before}, to=after) for skill_id, before, after in candidate.gains],
+        readiness_after_pct=after_pct, rationale=_rationale(employee, candidate, target, lang),
+    )
+
+
+def _baseline_not_recommended(ds: Dataset, recommendations: list[Recommendation], levels, gap_values: dict[str, int]) -> list[NotRecommended]:
+    """Contrast the top pick with the naive 'lowest skill' rule for explainability."""
+
+    if not (recommendations and gap_values):
+        return []
+    lowest = min((int(levels.get(skill_id, 0)), skill_id) for skill_id in gap_values)[1]
+    if lowest in {gain.skill_id for gain in recommendations[0].expected_gains}:
+        return []
+    skill_name = ds.skills.get(lowest, {}).get("name", lowest)
+    return [NotRecommended(skill_id=lowest, event_id=None, reason=f"Naive lowest skill is {skill_name} at {levels.get(lowest, 0)}, but {recommendations[0].title} closes a higher weighted target gap with fit and availability.")]
+
+
+def _prepare(ds: Dataset, employee_id: str):
     employee = ds.employees[employee_id]
     target = resolve_target(ds, employee)
     levels = effective_skills(ds, employee)
     gap_values = gaps(ds, employee, levels, target)
     candidates = evaluate_candidates(ds, employee)
-    profile_data = target_profile(ds, target) or {}
-    critical = set(profile_data.get("critical_skills", []))
+    critical = set((target_profile(ds, target) or {}).get("critical_skills", []))
+    return employee, target, levels, gap_values, candidates, critical
+
+
+def scored_pool(ds: Dataset, employee_id: str, limit: int = 8) -> list[Candidate]:
+    """Top eligible candidates by base score — the shortlist the AI layer chooses from."""
+
+    _, _, _, _, candidates, _ = _prepare(ds, employee_id)
+    eligible = [item for item in candidates if item.eligible]
+    eligible.sort(key=lambda item: (item.base_score, item.event["event_id"]), reverse=True)
+    return eligible[:limit]
+
+
+def recommend(ds: Dataset, employee_id: str, k: int = 3, mode: Literal["rules", "ai"] = "rules", lang: str | None = None) -> RecommendationResult:
+    """Generate explainable deterministic recommendations (AI is layered elsewhere)."""
+
+    started = perf_counter()
+    employee, target, levels, gap_values, candidates, critical = _prepare(ds, employee_id)
     chosen = _select([item for item in candidates if item.eligible], gap_values, critical, max(0, min(k, 3)))
-    events = [candidate.event for candidate, _ in chosen]
-    projected = trajectory(ds, levels, target, events)
-    recommendations: list[Recommendation] = []
-    for rank, ((candidate, score), after_pct) in enumerate(zip(chosen, projected), start=1):
-        recommendations.append(Recommendation(
-            rank=rank, event_id=candidate.event["event_id"], title=candidate.event["title"], type=candidate.event["type"],
-            format=candidate.event["format"], duration_hours=float(candidate.event["duration_hours"]), next_session=candidate.next_session,
-            score=round(score, 6), factors=_factor_list(ds, candidate, levels, target, gap_values),
-            expected_gains=[ExpectedGain(skill_id=skill_id, **{"from": before}, to=after) for skill_id, before, after in candidate.gains],
-            readiness_after_pct=after_pct, rationale=_rationale(employee, candidate, target, lang),
-        ))
-    baseline: list[NotRecommended] = []
-    if recommendations and gap_values:
-        lowest = min((int(levels.get(skill_id, 0)), skill_id) for skill_id in gap_values)[1]
-        top_skills = {gain.skill_id for gain in recommendations[0].expected_gains}
-        if lowest not in top_skills:
-            skill_name = ds.skills.get(lowest, {}).get("name", lowest)
-            baseline.append(NotRecommended(skill_id=lowest, event_id=None, reason=f"Naive lowest skill is {skill_name} at {levels.get(lowest, 0)}, but {recommendations[0].title} closes a higher weighted target gap with fit and availability."))
+    projected = trajectory(ds, levels, target, [candidate.event for candidate, _ in chosen])
+    recommendations = [
+        _build_recommendation(ds, employee, candidate, rank, score, after_pct, levels, target, gap_values, lang)
+        for rank, ((candidate, score), after_pct) in enumerate(zip(chosen, projected), start=1)
+    ]
     return RecommendationResult(
         employee_id=employee_id, target=target, generated_by="rules", model=None,
         latency_ms=round((perf_counter() - started) * 1000), recommendations=recommendations,
-        trajectory=Trajectory(now_pct=readiness(ds, levels, target).pct, after_pct=projected), not_recommended=baseline,
+        trajectory=Trajectory(now_pct=readiness(ds, levels, target).pct, after_pct=projected),
+        not_recommended=_baseline_not_recommended(ds, recommendations, levels, gap_values),
         empty_reason=None if recommendations else _empty_reason(ds, employee, candidates, target, gap_values),
+    )
+
+
+def recommend_for_events(ds: Dataset, employee_id: str, event_ids: list[str], lang: str | None = None, generated_by: str = "llm", model: str | None = None, latency_ms: int = 0) -> RecommendationResult | None:
+    """Build a result for an explicit ordered set of event ids (the AI layer's picks).
+
+    Returns None when none of the ids are eligible, so the caller can fall back to rules."""
+
+    employee, target, levels, gap_values, candidates, _ = _prepare(ds, employee_id)
+    by_id = {item.event["event_id"]: item for item in candidates if item.eligible}
+    chosen = [by_id[event_id] for event_id in event_ids if event_id in by_id][:3]
+    if not chosen:
+        return None
+    projected = trajectory(ds, levels, target, [candidate.event for candidate in chosen])
+    recommendations = [
+        _build_recommendation(ds, employee, candidate, rank, candidate.base_score, after_pct, levels, target, gap_values, lang)
+        for rank, (candidate, after_pct) in enumerate(zip(chosen, projected), start=1)
+    ]
+    return RecommendationResult(
+        employee_id=employee_id, target=target, generated_by=generated_by, model=model, latency_ms=latency_ms,
+        recommendations=recommendations, trajectory=Trajectory(now_pct=readiness(ds, levels, target).pct, after_pct=projected),
+        not_recommended=_baseline_not_recommended(ds, recommendations, levels, gap_values), empty_reason=None,
     )
 
 
