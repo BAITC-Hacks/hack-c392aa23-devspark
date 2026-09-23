@@ -1,0 +1,427 @@
+{
+  "hero": {
+    "employee": {
+      "name": "Akmaral Ismailova",
+      "role": "Backend Engineer",
+      "grade": "Middle",
+      "tenure_months": 52
+    },
+    "target": {
+      "role": "Backend Engineer",
+      "grade": "Senior",
+      "source": "next_grade"
+    },
+    "readiness": {
+      "pct": 75.76,
+      "critical_met": 1,
+      "critical_total": 2
+    },
+    "trajectory": {
+      "now_pct": 75.76,
+      "after_pct": [
+        78.79,
+        80.3,
+        81.82
+      ]
+    },
+    "card": {
+      "event_id": "EV_038",
+      "title": "Leadership Foundations",
+      "type": "course",
+      "format": "online",
+      "duration_hours": 16.0,
+      "next_session": "2026-10-08",
+      "score": 0.041667,
+      "factors": [
+        {
+          "kind": "target_gap",
+          "label": "Leadership 1 → 2 required for Senior"
+        },
+        {
+          "kind": "expected_gain",
+          "label": "Leadership Foundations raises Leadership 1 → 2"
+        },
+        {
+          "kind": "target_gap",
+          "label": "Stakeholder Management 1 → 2 required for Senior"
+        },
+        {
+          "kind": "expected_gain",
+          "label": "Leadership Foundations raises Stakeholder Management 1 → 2"
+        },
+        {
+          "kind": "participation_history",
+          "label": "Similar activity history: 0.0 positive, 1.0 negative; propensity 0.33"
+        },
+        {
+          "kind": "format_fit",
+          "label": "online completion rate 50%; fit 0.50"
+        },
+        {
+          "kind": "availability",
+          "label": "Next session in 2026-10-08; availability 1.00"
+        }
+      ],
+      "gains": [
+        {
+          "skill": "Leadership",
+          "from": 1,
+          "to": 2
+        },
+        {
+          "skill": "Stakeholder Management",
+          "from": 1,
+          "to": 2
+        }
+      ],
+      "readiness_after": 78.79,
+      "generated_by": "llm",
+      "rationale": {
+        "en": "Leadership Foundations boosts your Stakeholder Management and Leadership skills, both needed for Senior. Despite a lower past online engagement, this course fits your hybrid work style and is available soon. It's a great step to close key gaps and align with your promotion goals.",
+        "ru": "Leadership Foundations повышает ваши навыки управления заинтересованными сторонами и лидерства, которые необходимы для уровня Senior. Несмотря на низкую прошлую онлайн-активность, этот курс подходит вашему гибридному стилю работы и скоро будет доступен. Это отличный шаг для устранения ключевых пробелов и согласования с вашими целями по повышению.",
+        "kk": "Leadership Foundations сіздің Stakeholder Management және Leadership дағдыларыңызды арттырады, бұл екеуі де Senior деңгейі үшін қажет. Өткендегі төмен онлайн қатысуына қарамастан, бұл курс сіздің гибридті жұмыс стиліңізге сәйкес келеді және жақында қолжетімді болады. Бұл негізгі олқылықтарды жоюға және көтермелеу мақсаттарыңызға сәйкес келуге тамаша қадам."
+      },
+      "factor_labels": {
+        "en": [
+          "Leadership 1 → 2 required for Senior",
+          "Leadership Foundations raises Leadership 1 → 2",
+          "Stakeholder Management 1 → 2 required for Senior",
+          "Leadership Foundations raises Stakeholder Management 1 → 2",
+          "Similar activity history: 0.0 positive, 1.0 negative; propensity 0.33",
+          "online completion rate 50%; fit 0.50",
+          "Next session in 2026-10-08; availability 1.00"
+        ],
+        "ru": [
+          "Leadership 1 → 2 требуется для Senior",
+          "Leadership Foundations повышает Leadership 1 → 2",
+          "Stakeholder Management 1 → 2 требуется для Senior",
+          "Leadership Foundations повышает Stakeholder Management 1 → 2",
+          "Похожая история активности: 0.0 положительных, 1.0 отрицательных; склонность 0.33",
+          "онлайн-уровень завершения 50%; соответствие 0.50",
+          "Следующая сессия 2026-10-08; доступность 1.00"
+        ],
+        "kk": [
+          "Leadership 1 → 2 Senior деңгейі үшін қажет",
+          "Leadership Foundations Leadership 1 → 2 деңгейін көтереді",
+          "Stakeholder Management 1 → 2 Senior деңгейі үшін қажет",
+          "Leadership Foundations Stakeholder Management 1 → 2 деңгейін көтереді",
+          "Ұқсас әрекет тарихы: 0.0 оң, 1.0 теріс; ықтималдық 0.33",
+          "онлайн аяқтау көрсеткіші 50%; сәйкес келу 0.50",
+          "Келесі сессия 2026-10-08; қолжетімділік 1.00"
+        ]
+      }
+    },
+    "others": [
+      "Cloud Certification Prep",
+      "Mentor Track"
+    ],
+    "why_not": "Naive lowest skill is Cloud Platforms at 1, but Leadership Foundations closes a higher weighted target gap with fit and availability."
+  },
+  "trap": {
+    "persona": {
+      "role": "Backend Engineer",
+      "grade": "Middle",
+      "target": {
+        "role": "Backend Engineer",
+        "grade": "Senior",
+        "source": "next_grade"
+      }
+    },
+    "lowest": {
+      "skill": "Public Speaking",
+      "level": 0,
+      "refused": 3
+    },
+    "critical_gap": {
+      "skill": "API Design",
+      "have": 2,
+      "need": 4
+    },
+    "naive": {
+      "event_id": "EV_023",
+      "title": "Data Storytelling & Visualization"
+    },
+    "quest": {
+      "event_id": "EV_005",
+      "title": "System Design Fundamentals",
+      "type": "course",
+      "format": "online",
+      "duration_hours": 16.0,
+      "next_session": "2026-11-23",
+      "score": 0.125217,
+      "factors": [
+        {
+          "kind": "critical_gap",
+          "label": "System Design 2 → 4 required for Senior (critical)"
+        },
+        {
+          "kind": "expected_gain",
+          "label": "System Design Fundamentals raises System Design 2 → 3"
+        },
+        {
+          "kind": "critical_gap",
+          "label": "API Design 2 → 4 required for Senior (critical)"
+        },
+        {
+          "kind": "expected_gain",
+          "label": "System Design Fundamentals raises API Design 2 → 3"
+        },
+        {
+          "kind": "participation_history",
+          "label": "Similar activity history: 0.0 positive, 0.0 negative; propensity 0.50"
+        },
+        {
+          "kind": "format_fit",
+          "label": "online completion rate 80%; fit 0.80"
+        },
+        {
+          "kind": "availability",
+          "label": "Next session in 2026-11-23; availability 0.80"
+        }
+      ],
+      "gains": [
+        {
+          "skill": "System Design",
+          "from": 2,
+          "to": 3
+        },
+        {
+          "skill": "API Design",
+          "from": 2,
+          "to": 3
+        }
+      ],
+      "readiness_after": 74.24,
+      "generated_by": "llm",
+      "rationale": {
+        "en": "System Design Fundamentals is perfect to close your critical gaps in System Design and API Design, both essential for your Senior role. It fits your online preference well and is available soon. This course offers a strong expected skill gain and aligns with your promotion goals.",
+        "ru": "Основы проектирования систем идеально подходят для устранения ваших критических пробелов в проектировании систем и API, что важно для вашей старшей роли. Он хорошо соответствует вашему предпочтению онлайн-обучения и скоро будет доступен. Этот курс предлагает значительный ожидаемый прирост навыков и соответствует вашим целям по повышению.",
+        "kk": "System Design Fundamentals сіздің Senior рөліңіз үшін маңызды System Design және API Design саласындағы маңызды олқылықтарды жоюға өте қолайлы. Бұл сіздің онлайнға деген қалауыңызға жақсы сәйкес келеді және жақында қолжетімді болады. Бұл курс күтілетін дағдыларды айтарлықтай арттырады және сіздің қызметтік өсу мақсаттарыңызға сәйкес келеді."
+      },
+      "factor_labels": {
+        "en": [
+          "System Design 2 → 4 required for Senior (critical)",
+          "System Design Fundamentals raises System Design 2 → 3",
+          "API Design 2 → 4 required for Senior (critical)",
+          "System Design Fundamentals raises API Design 2 → 3",
+          "Similar activity history: 0.0 positive, 0.0 negative; propensity 0.50",
+          "online completion rate 80%; fit 0.80",
+          "Next session in 2026-11-23; availability 0.80"
+        ],
+        "ru": [
+          "System Design 2 → 4 required for Senior (critical)",
+          "Основы проектирования систем повышают System Design 2 → 3",
+          "API Design 2 → 4 required for Senior (critical)",
+          "Основы проектирования систем повышают API Design 2 → 3",
+          "Похожая история активности: 0.0 положительных, 0.0 отрицательных; склонность 0.50",
+          "уровень завершения онлайн 80%; соответствие 0.80",
+          "Следующая сессия 2026-11-23; доступность 0.80"
+        ],
+        "kk": [
+          "System Design 2 → 4 Senior үшін қажет (маңызды)",
+          "System Design Fundamentals System Design 2 → 3 деңгейін көтереді",
+          "API Design 2 → 4 Senior үшін қажет (маңызды)",
+          "System Design Fundamentals API Design 2 → 3 деңгейін көтереді",
+          "Ұқсас әрекет тарихы: 0.0 оң, 0.0 теріс; ықтималдық 0.50",
+          "онлайн аяқтау көрсеткіші 80%; сәйкес келу 0.80",
+          "Келесі сессия 2026-11-23 күні; қолжетімділік 0.80"
+        ]
+      }
+    }
+  },
+  "progress": {
+    "event_title": "Leadership Foundations",
+    "changes": [
+      {
+        "skill": "Leadership",
+        "from": 1,
+        "to": 2
+      },
+      {
+        "skill": "Conflict Resolution",
+        "from": 2,
+        "to": 3
+      },
+      {
+        "skill": "Stakeholder Management",
+        "from": 1,
+        "to": 2
+      }
+    ],
+    "readiness_before": 75.76,
+    "readiness_after": 78.79,
+    "next": [
+      "Cloud Certification Prep",
+      "Kubernetes in Practice"
+    ]
+  },
+  "hr": {
+    "lagging": [
+      {
+        "name": "Mentoring",
+        "employees_below": 126,
+        "avg_gap": 1.76,
+        "critical_count": 30
+      },
+      {
+        "name": "Communication",
+        "employees_below": 118,
+        "avg_gap": 1.45,
+        "critical_count": 0
+      },
+      {
+        "name": "Stakeholder Management",
+        "employees_below": 102,
+        "avg_gap": 1.59,
+        "critical_count": 12
+      },
+      {
+        "name": "Leadership",
+        "employees_below": 97,
+        "avg_gap": 1.86,
+        "critical_count": 43
+      },
+      {
+        "name": "Public Speaking",
+        "employees_below": 82,
+        "avg_gap": 1.55,
+        "critical_count": 0
+      }
+    ],
+    "no_step": [
+      {
+        "who": "A. S.",
+        "role": "Frontend Engineer",
+        "grade": "Lead",
+        "reason": "AT_TOP_NO_GOAL",
+        "hint": "At the top grade with no goal set — offer lateral or mentoring options, never pressure."
+      },
+      {
+        "who": "R. B.",
+        "role": "Customer Support Specialist",
+        "grade": "Senior",
+        "reason": "NO_ELIGIBLE_EVENTS",
+        "hint": "No untaken activity develops their remaining gaps — consider creating or sourcing one."
+      },
+      {
+        "who": "Z. O.",
+        "role": "Customer Support Specialist",
+        "grade": "Lead",
+        "reason": "AT_TOP_NO_GOAL",
+        "hint": "At the top grade with no goal set — offer lateral or mentoring options, never pressure."
+      }
+    ],
+    "participation": [
+      {
+        "title": "Code of Conduct & Workplace Safety",
+        "rate": 0.948,
+        "flagged": false,
+        "rating": null
+      },
+      {
+        "title": "Personal Data Protection",
+        "rate": 0.9072,
+        "flagged": false,
+        "rating": null
+      },
+      {
+        "title": "Information Security Awareness",
+        "rate": 0.9063,
+        "flagged": false,
+        "rating": null
+      },
+      {
+        "title": "Public Speaking Club",
+        "rate": 0.6856,
+        "flagged": false,
+        "rating": 4.21
+      },
+      {
+        "title": "Structured Problem Solving",
+        "rate": 0.6643,
+        "flagged": false,
+        "rating": 4.03
+      },
+      {
+        "title": "Business Writing & Documentation",
+        "rate": 0.7759,
+        "flagged": false,
+        "rating": 3.9
+      }
+    ],
+    "attrition": [
+      {
+        "who": "D. D.",
+        "role": "Sales Manager",
+        "grade": "Middle",
+        "risk": 80,
+        "level": "high",
+        "reasons": [
+          "4 refusals or no-shows in 6 months",
+          "1 overdue mandatory item(s)",
+          "no voluntary activity completed in 6 months",
+          "no career goal set"
+        ]
+      },
+      {
+        "who": "R. M.",
+        "role": "Product Manager",
+        "grade": "Junior",
+        "risk": 65,
+        "level": "high",
+        "reasons": [
+          "1 overdue mandatory item(s)",
+          "no voluntary activity completed in 6 months",
+          "low readiness (44%) after 2+ years"
+        ]
+      },
+      {
+        "who": "K. L.",
+        "role": "Product Manager",
+        "grade": "Middle",
+        "risk": 65,
+        "level": "high",
+        "reasons": [
+          "1 overdue mandatory item(s)",
+          "no voluntary activity completed in 6 months",
+          "low readiness (48%) after 4+ years"
+        ]
+      }
+    ],
+    "no_step_total": 31
+  },
+  "people": [
+    {
+      "employee_id": "E0028",
+      "full_name": "Akmaral Ismailova",
+      "role": "Backend Engineer",
+      "grade": "Middle",
+      "tag": "case_example"
+    },
+    {
+      "employee_id": "E0112",
+      "full_name": "Sergey Lebedev",
+      "role": "Customer Support Specialist",
+      "grade": "Senior",
+      "tag": "speaking_trap"
+    },
+    {
+      "employee_id": "E9003",
+      "full_name": "Trap CrossRole",
+      "role": "QA Engineer",
+      "grade": "Middle",
+      "tag": "cross_role"
+    }
+  ],
+  "stats": {
+    "profiles": 200,
+    "activities": 40,
+    "skills": 60,
+    "history": 2743,
+    "traps_passed": 8,
+    "traps_total": 8,
+    "rules_ms": 2.1,
+    "ai_ms": 4342,
+    "model": "gpt-4.1-mini"
+  }
+}
