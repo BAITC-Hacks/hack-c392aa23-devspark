@@ -70,3 +70,24 @@ def test_complete_writes_history_and_reports_skill_change(client: TestClient):
     body = response.json()
     assert body["record"]["status"] == "completed"
     assert body["skills_changed"]
+
+
+def test_ask_returns_grounded_answer(client: TestClient):
+    headers = employee_headers(client, "E0028")
+    response = client.post("/api/employees/E0028/ask", headers=headers, json={"question": "How close am I to Senior?", "lang": "en"})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["answer"] and body["generated_by"] in {"llm", "rules"}
+
+
+def test_ask_forbidden_for_other_employee(client: TestClient):
+    headers = employee_headers(client, "E0028")
+    assert client.post("/api/employees/E0001/ask", headers=headers, json={"question": "hi"}).status_code == 403
+
+
+def test_hr_overview_includes_attrition_and_disengaged(client: TestClient):
+    overview = client.get("/api/hr/overview", headers=hr_headers(client)).json()
+    assert isinstance(overview["attrition_risk"], list)
+    assert isinstance(overview["disengaged"], list)
+    for risk in overview["attrition_risk"]:
+        assert risk["level"] in {"low", "medium", "high"} and risk["reasons"]
