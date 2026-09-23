@@ -110,14 +110,14 @@ def _factor_list(ds: Dataset, candidate: Candidate, levels: dict[str, int], targ
     return factors
 
 
-def _rationale(employee: Json, candidate: Candidate, target: Target) -> str:
+def _rationale(employee: Json, candidate: Candidate, target: Target, lang: str | None = None) -> str:
     # Rules-mode text remains an invitation and honors the employee's UI language.
     templates = {
         "en": f"You can build progress toward {target.grade} with {candidate.event['title']}; it directly closes a current skill gap.",
         "ru": f"Вы можете продвинуться к уровню {target.grade} с {candidate.event['title']}; активность закрывает текущий дефицит навыка.",
         "kk": f"{candidate.event['title']} арқылы {target.grade} деңгейіне жақындай аласыз; ол қазіргі дағды алшақтығын жабады.",
     }
-    return templates.get(employee.get("preferred_language"), templates["en"])
+    return templates.get(lang or employee.get("preferred_language"), templates["en"])
 
 
 def _empty_reason(ds: Dataset, employee: Json, candidates: list[Candidate], target: Target, gap_values: dict[str, int]) -> str:
@@ -159,7 +159,7 @@ def profile(ds: Dataset, employee_id: str) -> Profile:
     )
 
 
-def recommend(ds: Dataset, employee_id: str, k: int = 3, mode: Literal["rules", "ai"] = "rules") -> RecommendationResult:
+def recommend(ds: Dataset, employee_id: str, k: int = 3, mode: Literal["rules", "ai"] = "rules", lang: str | None = None) -> RecommendationResult:
     """Generate explainable deterministic recommendations (AI is layered elsewhere)."""
 
     started = perf_counter()
@@ -180,7 +180,7 @@ def recommend(ds: Dataset, employee_id: str, k: int = 3, mode: Literal["rules", 
             format=candidate.event["format"], duration_hours=float(candidate.event["duration_hours"]), next_session=candidate.next_session,
             score=round(score, 6), factors=_factor_list(ds, candidate, levels, target, gap_values),
             expected_gains=[ExpectedGain(skill_id=skill_id, **{"from": before}, to=after) for skill_id, before, after in candidate.gains],
-            readiness_after_pct=after_pct, rationale=_rationale(employee, candidate, target),
+            readiness_after_pct=after_pct, rationale=_rationale(employee, candidate, target, lang),
         ))
     baseline: list[NotRecommended] = []
     if recommendations and gap_values:
