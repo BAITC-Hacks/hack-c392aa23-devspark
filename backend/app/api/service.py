@@ -151,13 +151,30 @@ def profile(store: CareerStore, employee_id: str) -> Profile:
 
 
 def recommend(store: CareerStore, employee_id: str, mode: str = "rules", lang: str | None = None) -> RecommendationResult:
+    if mode == "ai" and store.engine_dataset is not None:
+        ai = _ai_recommendation(store.engine_dataset, employee_id, lang)
+        if ai is not None:
+            return ai
     function = _engine_function("recommend")
     if function and store.engine_dataset is not None:
-        kwargs = {"mode": mode}
+        kwargs: dict[str, Any] = {}
         if lang:
             kwargs["lang"] = lang
         return RecommendationResult.model_validate(function(store.engine_dataset, employee_id, **kwargs))
     return fallback_recommend(store, employee_id)
+
+
+def _ai_recommendation(engine_dataset: Any, employee_id: str, lang: str | None) -> RecommendationResult | None:
+    """Call A's optional AI layer; any failure means fall back to rules mode."""
+
+    try:
+        from app.llm.decide import ai_recommendation
+    except ModuleNotFoundError:
+        return None
+    try:
+        return ai_recommendation(engine_dataset, employee_id, lang)
+    except Exception:
+        return None
 
 
 def apply_activity(store: CareerStore, employee_id: str, event_id: str, action: str) -> ProgressUpdate:

@@ -67,7 +67,12 @@ def demo_people(store: Store) -> list[PersonSummary]:
 @router.get("/health", response_model=Health)
 def health() -> Health:
     key = os.getenv("LLM_API_KEY", "")
-    return Health(status="ok", llm_enabled=bool(key), model=os.getenv("LLM_MODEL") if key else None)
+    try:
+        from app.llm.client import llm_enabled, model_name
+        enabled = llm_enabled()
+    except Exception:
+        enabled = bool(key)
+    return Health(status="ok", llm_enabled=enabled, model=(model_name() if enabled else None))
 
 
 @router.get("/employees/{employee_id}", response_model=Profile)
