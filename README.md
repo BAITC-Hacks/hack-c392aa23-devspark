@@ -177,6 +177,8 @@ flowchart LR
   `frontend/src/landing/fixtures.json` (карточка E0028 с AI-обоснованием на трёх
   языках, ловушка против наивного правила, HR-превью только с инициалами, метрики).
   `backend/scripts/render_og_image.py` рисует превью для соцсетей `frontend/public/og.png`.
+  Тесты `backend/tests/landing` следят, что данные лендинга полные (все три языка),
+  числа совпадают с набором данных, а в HR-превью только инициалы.
 - Страницы кабинета загружаются лениво: лендинг — ~83 КБ JS в gzip, страница
   сотрудника — ~4 КБ. `prefers-reduced-motion` и тёмная тема учитываются.
 - Аналитика — только два анонимных события (`demo_opened`, `contact_clicked`) в
@@ -217,6 +219,16 @@ npm run dev        # http://localhost:5173, проксирует /api на :8000
 ```
 
 Тесты: `cd backend && pytest -q`. Оценка на trap-профилях: `python eval/run_eval.py`.
+
+Команды `make` (из корня репозитория):
+
+| Команда | Что делает |
+|---|---|
+| `make up` | `docker compose up --build` — всё одной командой |
+| `make test` | тесты backend (`pytest -q`) |
+| `make eval` | оценка на 8 trap-профилях → `eval/RESULTS.md` |
+| `make fixtures` | пересобрать данные лендинга из движка и API (AI-часть — при `LLM_API_KEY`) |
+| `make og` | перерисовать превью для соцсетей `frontend/public/og.png` (нужен Pillow) |
 
 ### Маршруты
 
