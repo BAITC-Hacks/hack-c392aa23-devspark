@@ -201,7 +201,7 @@ LLM_API_KEY=sk-...
 LLM_MODEL=gpt-4.1-mini
 ```
 
-> Порт 8000 должен быть свободен. Переопределить: `docker compose run --service-ports -p 8010:8000 app`.
+> Если порт 8000 занят, укажите другой: `PORT=8010 docker compose up --build` → http://localhost:8010.
 
 ### Вариант B — локальная разработка
 
