@@ -72,7 +72,17 @@ def _select(candidates: list[Candidate], gap_values: dict[str, int], critical: s
     return selected
 
 
+def _plural(n: int | float, one: str, many: str) -> str:
+    return one if n == 1 else many
+
+
+FORMAT_NAMES = {"online": "Online", "offline": "Offline", "self_paced": "Self-paced"}
+
+
 def _factor_list(ds: Dataset, candidate: Candidate, levels: dict[str, int], target: Target, gap_values: dict[str, int]) -> list[RecommendationFactor]:
+    """Human-readable factors. Labels state facts plainly; the numbers behind the
+    score live in `impact` and in the 'How this was calculated' view."""
+
     profile_data = target_profile(ds, target) or {}
     critical = set(profile_data.get("critical_skills", []))
     factors: list[RecommendationFactor] = []
@@ -82,31 +92,40 @@ def _factor_list(ds: Dataset, candidate: Candidate, levels: dict[str, int], targ
         is_critical = skill_id in critical
         factors.append(RecommendationFactor(
             kind="critical_gap" if is_critical else "target_gap",
-            label=f"{skill['name']} {before} → {required} required for {target.grade}" + (" (critical)" if is_critical else ""),
+            label=f"{target.grade} needs {skill['name']} {required} (you have {before})" + (" · critical" if is_critical else ""),
             impact=round((3 if is_critical else 1) * gap_values.get(skill_id, 0), 3),
         ))
-        factors.append(RecommendationFactor(
-            kind="expected_gain", label=f"{candidate.event['title']} raises {skill['name']} {before} → {after}", impact=after - before,
-        ))
-        if levels.pending_from.get(skill_id):
+        factors.append(RecommendationFactor(kind="expected_gain", label=f"Raises {skill['name']} {before} → {after}", impact=after - before))
+        pending = len(levels.pending_from.get(skill_id, []))
+        if pending:
             factors.append(RecommendationFactor(
-                kind="stale_assessment", label=f"{skill['name']} has {len(levels.pending_from[skill_id])} completed activity pending review", impact=float(len(levels.pending_from[skill_id])),
+                kind="stale_assessment", label=f"{skill['name']}: {pending} {_plural(pending, 'completion', 'completions')} awaiting review", impact=float(pending),
             ))
-    factors.append(RecommendationFactor(
-        kind="participation_history",
-        label=f"Similar activity history: {candidate.history.positive:.1f} positive, {candidate.history.negative:.1f} negative; propensity {candidate.history.propensity:.2f}",
-        impact=round(candidate.history.propensity, 3),
-    ))
-    factors.append(RecommendationFactor(
-        kind="format_fit",
-        label=f"{candidate.event['format']} completion rate {candidate.history.format_completion_rate:.0%}; fit {candidate.fit:.2f}", impact=round(candidate.fit, 3),
-    ))
-    availability_label = "Self-paced and available now" if candidate.event["format"] == "self_paced" else f"Next session in {(candidate.next_session.isoformat() if candidate.next_session else 'n/a')}; availability {candidate.availability:.2f}"
+    history = candidate.history
+    if history.completed_similar or history.refused_similar:
+        participation = f"Similar activities: {history.completed_similar} completed, {history.refused_similar} declined or missed"
+    else:
+        participation = "No history with similar activities yet"
+    factors.append(RecommendationFactor(kind="participation_history", label=participation, impact=round(history.propensity, 3)))
+    format_name = FORMAT_NAMES.get(candidate.event["format"], candidate.event["format"])
+    if history.format_total:
+        format_label = f"{format_name}: you completed {history.format_completion_rate:.0%} of past ones"
+    else:
+        format_label = f"{format_name}: no history with this format yet"
+    if candidate.fit < history.format_completion_rate:
+        format_label += " · remote, offline"
+    factors.append(RecommendationFactor(kind="format_fit", label=format_label, impact=round(candidate.fit, 3)))
+    if candidate.event["format"] == "self_paced":
+        availability_label = "Self-paced — start any time"
+    elif candidate.next_session:
+        availability_label = f"Next session {candidate.next_session.isoformat()}"
+    else:
+        availability_label = "No session scheduled yet"
     factors.append(RecommendationFactor(kind="availability", label=availability_label, impact=candidate.availability))
     if candidate.unlocks:
-        factors.append(RecommendationFactor(kind="prerequisites", label=f"Completing this unlocks {', '.join(candidate.unlocks[:3])}", impact=float(len(candidate.unlocks))))
-    if candidate.history.workload:
-        factors.append(RecommendationFactor(kind="workload", label=f"You have {candidate.history.workload} open assigned or in-progress activity", impact=-float(candidate.history.workload)))
+        factors.append(RecommendationFactor(kind="prerequisites", label=f"Unlocks {', '.join(candidate.unlocks[:3])}", impact=float(len(candidate.unlocks))))
+    if history.workload:
+        factors.append(RecommendationFactor(kind="workload", label=f"{history.workload} {_plural(history.workload, 'activity', 'activities')} already open", impact=-float(history.workload)))
     return factors
 
 

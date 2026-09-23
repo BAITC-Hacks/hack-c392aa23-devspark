@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import re
 from time import perf_counter
 from typing import Any
 
@@ -17,6 +18,7 @@ from .client import get_client, model_name
 from .prompt import RESPONSE_SCHEMA, SYSTEM_PROMPT, build_context
 
 logger = logging.getLogger("careerquest.llm")
+CRITICAL_WORDS = re.compile(r"critical|критич|сыни", re.IGNORECASE)
 _CACHE: dict[str, RecommendationResult] = {}
 
 
@@ -47,6 +49,9 @@ def _validate(data: dict[str, Any], candidate_ids: list[str], factor_kinds: dict
         unknown = used - factor_kinds.get(event_id, set())
         if unknown:
             return f"{event_id} cites factors {sorted(unknown)} that are not present on it; allowed: {sorted(factor_kinds.get(event_id, set()))}."
+        # The text must not overclaim: 'critical' is reserved for real critical gaps.
+        if CRITICAL_WORDS.search(pick.get("rationale") or "") and "critical_gap" not in factor_kinds.get(event_id, set()):
+            return f"{event_id} has no critical_gap factor, so its rationale must not call any skill critical."
     return None
 
 

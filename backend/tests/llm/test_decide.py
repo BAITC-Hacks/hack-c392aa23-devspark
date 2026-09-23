@@ -89,3 +89,16 @@ def test_exception_falls_back(monkeypatch, ds):
 def test_disabled_client_returns_none(monkeypatch, ds):
     monkeypatch.setattr(decide, "get_client", lambda: None)
     assert decide.ai_recommendation(ds, "E0028") is None
+
+
+def test_calling_a_non_critical_skill_critical_is_rejected(monkeypatch, ds):
+    from app.llm.prompt import build_context
+    built = build_context(ds, "E0028", None)
+    event_id = next(e for e in built["candidate_ids"] if "critical_gap" not in built["factor_kinds_by_event"][e])
+    kinds = sorted(built["factor_kinds_by_event"][event_id])[:3]
+    overclaim = {"picks": [{"event_id": event_id, "rationale": "This closes your critical gap.", "factors_used": kinds}], "not_recommended": [], "summary": "s"}
+    honest = {"picks": [{"event_id": event_id, "rationale": "This closes a gap for your next grade.", "factors_used": kinds}], "not_recommended": [], "summary": "s"}
+    client = _install(monkeypatch, [overclaim, honest])
+    result = decide.ai_recommendation(ds, "E0028")
+    assert client.chat.completions.calls == 2  # the overclaim was rejected and retried
+    assert result is not None and "critical" not in result.recommendations[0].rationale.lower()

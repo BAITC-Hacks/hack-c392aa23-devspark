@@ -35,31 +35,31 @@
       "factors": [
         {
           "kind": "target_gap",
-          "label": "Leadership 1 → 2 required for Senior"
+          "label": "Senior needs Leadership 2 (you have 1)"
         },
         {
           "kind": "expected_gain",
-          "label": "Leadership Foundations raises Leadership 1 → 2"
+          "label": "Raises Leadership 1 → 2"
         },
         {
           "kind": "target_gap",
-          "label": "Stakeholder Management 1 → 2 required for Senior"
+          "label": "Senior needs Stakeholder Management 2 (you have 1)"
         },
         {
           "kind": "expected_gain",
-          "label": "Leadership Foundations raises Stakeholder Management 1 → 2"
+          "label": "Raises Stakeholder Management 1 → 2"
         },
         {
           "kind": "participation_history",
-          "label": "Similar activity history: 0.0 positive, 1.0 negative; propensity 0.33"
+          "label": "Similar activities: 0 completed, 1 declined or missed"
         },
         {
           "kind": "format_fit",
-          "label": "online completion rate 50%; fit 0.50"
+          "label": "Online: you completed 50% of past ones"
         },
         {
           "kind": "availability",
-          "label": "Next session in 2026-10-08; availability 1.00"
+          "label": "Next session 2026-10-08"
         }
       ],
       "gains": [
@@ -77,37 +77,37 @@
       "readiness_after": 78.79,
       "generated_by": "llm",
       "rationale": {
-        "en": "Boost your Leadership and Stakeholder Management skills, both needed for Senior. Despite a mixed history with online courses, this one fits your hybrid work style and is available soon. It directly targets your promotion gaps and aligns well with your goals.",
-        "ru": "Повышайте свои навыки лидерства и управления заинтересованными сторонами, которые необходимы для уровня Senior. Несмотря на смешанную историю с онлайн-курсами, этот курс подходит вашему гибридному стилю работы и скоро будет доступен. Он напрямую нацелен на ваши пробелы для повышения и хорошо соответствует вашим целям.",
-        "kk": "Жетекшілік және мүдделі тараптарды басқару дағдыларыңызды жетілдіріңіз, бұл екеуі де аға деңгейге қажет. Онлайн курстармен аралас тарихыңыз болса да, бұл курс сіздің аралас жұмыс стиліңізге сай келеді және жақында қолжетімді болады. Ол тікелей сіздің қызметтік өсуіңіздегі олқылықтарды нысанаға алады және мақсаттарыңызға жақсы сәйкес келеді."
+        "en": "This online course fits your hybrid work style and addresses your target gaps in Leadership and Stakeholder Management, raising both from 1 to 2. Despite one missed similar activity, your 50% completion rate online encourages trying this to boost your leadership skills for Senior grade.",
+        "ru": "Этот онлайн-курс соответствует вашему гибридному стилю работы и устраняет целевые пробелы в Leadership и Stakeholder Management, повышая оба с 1 до 2. Несмотря на одно пропущенное похожее мероприятие, ваш 50% уровень завершения онлайн поощряет попробовать это для улучшения ваших лидерских навыков для Senior уровня.",
+        "kk": "Бұл онлайн курс сіздің гибридті жұмыс стиліңізге сай келеді және Leadership мен Stakeholder Management саласындағы мақсатты олқылықтарыңызды жояды, екеуін де 1-ден 2-ге көтереді. Бір ұқсас іс-шараны өткізіп алғаныңызға қарамастан, сіздің онлайндағы 50% аяқтау көрсеткіші бұл курсты Senior деңгейіндегі көшбасшылық дағдыларыңызды арттыру үшін сынап көруге ынталандырады."
       },
       "factor_labels": {
         "en": [
-          "Leadership 1 → 2 required for Senior",
-          "Leadership Foundations raises Leadership 1 → 2",
-          "Stakeholder Management 1 → 2 required for Senior",
-          "Leadership Foundations raises Stakeholder Management 1 → 2",
-          "Similar activity history: 0.0 positive, 1.0 negative; propensity 0.33",
-          "online completion rate 50%; fit 0.50",
-          "Next session in 2026-10-08; availability 1.00"
+          "Senior needs Leadership 2 (you have 1)",
+          "Raises Leadership 1 → 2",
+          "Senior needs Stakeholder Management 2 (you have 1)",
+          "Raises Stakeholder Management 1 → 2",
+          "Similar activities: 0 completed, 1 declined or missed",
+          "Online: you completed 50% of past ones",
+          "Next session 2026-10-08"
         ],
         "ru": [
-          "Leadership 1 → 2 required for Senior",
-          "Leadership Foundations повышает Leadership 1 → 2",
-          "Stakeholder Management 1 → 2 required for Senior",
-          "Leadership Foundations повышает Stakeholder Management 1 → 2",
-          "Похожая история активности: 0.0 положительных, 1.0 отрицательных; склонность 0.33",
-          "уровень завершения онлайн 50%; соответствие 0.50",
-          "Следующая сессия 2026-10-08; доступность 1.00"
+          "Senior нуждается в Leadership 2 (у вас 1)",
+          "Повышает Leadership 1 → 2",
+          "Senior нуждается в Stakeholder Management 2 (у вас 1)",
+          "Повышает Stakeholder Management 1 → 2",
+          "Похожие мероприятия: 0 выполнено, 1 отклонено или пропущено",
+          "Онлайн: вы выполнили 50% прошлых",
+          "Следующая сессия 2026-10-08"
         ],
         "kk": [
-          "Leadership 1 → 2 required for Senior",
-          "Leadership Foundations Leadership 1 → 2 деңгейін көтереді",
-          "Stakeholder Management 1 → 2 required for Senior",
-          "Leadership Foundations Stakeholder Management 1 → 2 деңгейін көтереді",
-          "Ұқсас іс-әрекет тарихы: 0.0 оң, 1.0 теріс; ықтималдық 0.33",
-          "онлайн аяқтау көрсеткіші 50%; сәйкестік 0.50",
-          "Келесі сессия 2026-10-08; қолжетімділік 1.00"
+          "Senior деңгейі үшін Leadership 2 қажет (сізде 1 бар)",
+          "Leadership 1 → 2 деңгейін көтереді",
+          "Senior деңгейі үшін Stakeholder Management 2 қажет (сізде 1 бар)",
+          "Stakeholder Management 1 → 2 деңгейін көтереді",
+          "Ұқсас іс-шаралар: 0 аяқталған, 1 бас тартылған немесе өткізіп алынған",
+          "Онлайн: сіз өткен іс-шаралардың 50%-ын аяқтадыңыз",
+          "Келесі сессия 2026-10-08"
         ]
       }
     },
@@ -152,31 +152,31 @@
       "factors": [
         {
           "kind": "critical_gap",
-          "label": "System Design 2 → 4 required for Senior (critical)"
+          "label": "Senior needs System Design 4 (you have 2) · critical"
         },
         {
           "kind": "expected_gain",
-          "label": "System Design Fundamentals raises System Design 2 → 3"
+          "label": "Raises System Design 2 → 3"
         },
         {
           "kind": "critical_gap",
-          "label": "API Design 2 → 4 required for Senior (critical)"
+          "label": "Senior needs API Design 4 (you have 2) · critical"
         },
         {
           "kind": "expected_gain",
-          "label": "System Design Fundamentals raises API Design 2 → 3"
+          "label": "Raises API Design 2 → 3"
         },
         {
           "kind": "participation_history",
-          "label": "Similar activity history: 0.0 positive, 0.0 negative; propensity 0.50"
+          "label": "No history with similar activities yet"
         },
         {
           "kind": "format_fit",
-          "label": "online completion rate 80%; fit 0.80"
+          "label": "Online: no history with this format yet"
         },
         {
           "kind": "availability",
-          "label": "Next session in 2026-11-23; availability 0.80"
+          "label": "Next session 2026-11-23"
         }
       ],
       "gains": [
@@ -194,37 +194,37 @@
       "readiness_after": 74.24,
       "generated_by": "llm",
       "rationale": {
-        "en": "System Design Fundamentals is perfect to close your critical gaps in System Design and API Design, boosting your skills from 2 to 3. It fits your online preference well and is available soon. This course aligns directly with your Senior Backend Engineer target.",
-        "ru": "Основы проектирования систем идеально подходят для устранения ваших критических пробелов в проектировании систем и API, повышая ваши навыки с 2 до 3. Курс хорошо соответствует вашему предпочтению онлайн и скоро будет доступен. Этот курс напрямую соответствует вашей цели стать старшим бэкенд-инженером.",
-        "kk": "System Design Fundamentals жүйелік дизайн және API дизайндағы маңызды олқылықтарыңызды жоюға өте қолайлы, дағдыларыңызды 2-ден 3-ке дейін арттырады. Бұл сіздің онлайнға деген қалауыңызға жақсы сәйкес келеді және жақында қолжетімді болады. Бұл курс тікелей Senior Backend Engineer мақсатыңызға сәйкес келеді."
+        "en": "This online course directly addresses your critical gaps in System Design and API Design, raising both skills from 2 to 3. It fits your participation history with no prior declines in this format and is well aligned with your senior Backend Engineer target.",
+        "ru": "Этот онлайн-курс напрямую устраняет ваши критические пробелы в System Design и API Design, повышая оба навыка с 2 до 3. Он соответствует вашей истории участия без предыдущих отказов в этом формате и хорошо согласован с вашей целью стать senior Backend Engineer.",
+        "kk": "Бұл онлайн курс System Design және API Design саласындағы маңызды олқылықтарыңызды тікелей шешеді, екі дағдыларды 2-ден 3-ке дейін көтереді. Бұл сіздің қатысу тарихыңызға сәйкес келеді, осы форматта бұрын ешқандай бас тартулар болмаған және сіздің senior Backend Engineer мақсатыңызға жақсы үйлеседі."
       },
       "factor_labels": {
         "en": [
-          "System Design 2 → 4 required for Senior (critical)",
-          "System Design Fundamentals raises System Design 2 → 3",
-          "API Design 2 → 4 required for Senior (critical)",
-          "System Design Fundamentals raises API Design 2 → 3",
-          "Similar activity history: 0.0 positive, 0.0 negative; propensity 0.50",
-          "online completion rate 80%; fit 0.80",
-          "Next session in 2026-11-23; availability 0.80"
+          "Senior needs System Design 4 (you have 2) · critical",
+          "Raises System Design 2 → 3",
+          "Senior needs API Design 4 (you have 2) · critical",
+          "Raises API Design 2 → 3",
+          "No history with similar activities yet",
+          "Online: no history with this format yet",
+          "Next session 2026-11-23"
         ],
         "ru": [
-          "System Design 2 → 4 required for Senior (critical)",
-          "Основы проектирования систем повышают System Design 2 → 3",
-          "API Design 2 → 4 required for Senior (critical)",
-          "Основы проектирования систем повышают API Design 2 → 3",
-          "Похожая история активности: 0.0 положительных, 0.0 отрицательных; склонность 0.50",
-          "онлайн уровень завершения 80%; соответствие 0.80",
-          "Следующая сессия 2026-11-23; доступность 0.80"
+          "Senior needs System Design 4 (you have 2) · critical",
+          "Повышает System Design 2 → 3",
+          "Senior needs API Design 4 (you have 2) · critical",
+          "Повышает API Design 2 → 3",
+          "Пока нет истории с похожими активностями",
+          "Онлайн: пока нет истории с этим форматом",
+          "Следующая сессия 2026-11-23"
         ],
         "kk": [
-          "System Design 2 → 4 Senior үшін қажет (маңызды)",
-          "System Design Fundamentals System Design 2 → 3 деңгейін көтереді",
-          "API Design 2 → 4 Senior үшін қажет (маңызды)",
-          "System Design Fundamentals API Design 2 → 3 деңгейін көтереді",
-          "Ұқсас әрекет тарихы: 0.0 оң, 0.0 теріс; ықтималдық 0.50",
-          "онлайн аяқтау көрсеткіші 80%; сәйкес келу 0.80",
-          "Келесі сессия 2026-11-23; қолжетімділік 0.80"
+          "Senior үшін System Design 4 қажет (сізде 2 бар) · critical",
+          "System Design 2 → 3 деңгейін көтереді",
+          "Senior үшін API Design 4 қажет (сізде 2 бар) · critical",
+          "API Design 2 → 3 деңгейін көтереді",
+          "Ұқсас іс-шаралар бойынша әлі тарих жоқ",
+          "Онлайн: осы формат бойынша әлі тарих жоқ",
+          "Келесі сессия 2026-11-23"
         ]
       }
     }
@@ -430,14 +430,14 @@
             "low readiness (48%) after 4+ years"
           ],
           "ru": [
-            "1 просроченный обязательный пункт",
+            "1 просроченный обязательный элемент(ы)",
             "нет выполненной добровольной активности за 6 месяцев",
             "низкая готовность (48%) после 4+ лет"
           ],
           "kk": [
             "1 мерзімі өткен міндетті элемент(тер)",
             "6 ай ішінде ерікті іс-шаралар орындалмады",
-            "4 жылдан астам уақыттан кейін төмен дайындық (48%)"
+            "4+ жылдан кейін төмен дайындық (48%)"
           ]
         }
       }
@@ -474,8 +474,8 @@
     "history": 2743,
     "traps_passed": 8,
     "traps_total": 8,
-    "rules_ms": 2.1,
-    "ai_ms": 3608,
+    "rules_ms": 2.2,
+    "ai_ms": 4024,
     "model": "gpt-4.1-mini"
   }
 }

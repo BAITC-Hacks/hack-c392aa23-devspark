@@ -19,6 +19,10 @@ class HistoryFeatures:
     negative_for_format: float = 0.0
     format_completion_rate: float = 0.8
     workload: int = 0
+    # Raw counts for human-readable explanations (the fields above are weighted).
+    completed_similar: int = 0
+    refused_similar: int = 0
+    format_total: int = 0
 
     @property
     def propensity(self) -> float:
@@ -65,6 +69,7 @@ def _history_features(ds: Dataset, employee: Json, event: Json) -> HistoryFeatur
     twelve_months_ago = date(as_of.year - 1, as_of.month, as_of.day)
     positive = negative = negative_for_format = 0.0
     completed_for_format = total_for_format = 0
+    completed_similar = refused_similar = 0
     workload = 0
     for row in ds.employee_history(employee["employee_id"]):
         status = row.get("status")
@@ -78,17 +83,20 @@ def _history_features(ds: Dataset, employee: Json, event: Json) -> HistoryFeatur
             continue
         weight = 1.0 if _date(row["date"]) >= twelve_months_ago else 0.5
         if status == "completed":
+            completed_similar += 1
             positive += weight
             if row.get("assigned_by") == "self" and (row.get("feedback_rating") or 0) >= 4:
                 positive += weight
         elif status in NEGATIVE_STATUSES:
+            refused_similar += 1
             negative += weight
             if past_event.get("format") == event.get("format"):
                 # History remains similar across skill/type, but the opt-out rule
                 # suppresses only the format that repeatedly did not work.
                 negative_for_format += weight
     rate = completed_for_format / total_for_format if total_for_format else 0.8
-    return HistoryFeatures(positive=positive, negative=negative, negative_for_format=negative_for_format, format_completion_rate=rate, workload=workload)
+    return HistoryFeatures(positive=positive, negative=negative, negative_for_format=negative_for_format, format_completion_rate=rate, workload=workload,
+                           completed_similar=completed_similar, refused_similar=refused_similar, format_total=total_for_format)
 
 
 def _role_fits(employee: Json, event: Json) -> bool:

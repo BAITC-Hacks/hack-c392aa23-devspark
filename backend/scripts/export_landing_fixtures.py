@@ -49,10 +49,15 @@ def initials(name: str) -> str:
     return " ".join(part[0] + "." for part in name.split() if part)
 
 
+GRADES = ["Junior", "Middle", "Senior", "Lead"]
+KEEP_TERMS: list[str] = []  # skill names, filled from the dataset in main()
+
+
 def translate(client, model: str, texts: list[str], lang: str) -> list[str]:
     """Translate a list of UI strings, keeping names, numbers and arrows intact."""
     if lang == "en" or client is None or not texts:
         return texts
+    keep = ", ".join(GRADES + KEEP_TERMS)
     response = client.chat.completions.create(
         model=model, temperature=0,
         response_format={"type": "json_schema", "json_schema": {"name": "t", "strict": True, "schema": {
@@ -60,7 +65,8 @@ def translate(client, model: str, texts: list[str], lang: str) -> list[str]:
             "properties": {"items": {"type": "array", "items": {"type": "string"}}}}}},
         messages=[
             {"role": "system", "content": f"Translate each string to {LANG_NAMES[lang]} for a bank's HR product UI. "
-             "Keep event titles, numbers and arrows (→) exactly as they are. Return the same number of items in order."},
+             "Keep event titles, numbers and arrows (→) exactly as they are. These are product terms and must stay "
+             f"in English, unchanged: {keep}. Return the same number of items in order."},
             {"role": "user", "content": json.dumps({"items": texts}, ensure_ascii=False)},
         ],
     )
@@ -117,6 +123,7 @@ def main() -> int:
         shutil.copytree(ROOT / "data", root / "data", ignore=shutil.ignore_patterns("runtime", "extra"))
         ds = load_dataset(root / "data")
         skills = {sid: item.get("name", sid) for sid, item in ds.skills.items()}
+        KEEP_TERMS[:] = sorted(set(skills.values()))
         client, model = get_client(), model_name()
 
         with TestClient(create_app(root)) as api:
