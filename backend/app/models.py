@@ -332,3 +332,11 @@ class AskResponse(ApiModel):
     generated_by: Literal["llm", "rules"]
     model: str | None = None
     latency_ms: int = 0
+
+
+class LandingEvent(ApiModel):
+    """Anonymous landing-page analytics: two events, no personal data."""
+
+    event: Literal["demo_opened", "contact_clicked"]
+    profile: str | None = Field(default=None, max_length=16)
+    lang: Literal["en", "ru", "kk"] | None = None

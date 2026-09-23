@@ -1,7 +1,17 @@
 # Career Quest — Landing page design (SaaS)
 
-> Planning document. Nothing here is built yet. It describes what the landing page
-> should be, why, and how it would be built — precisely enough to hand to an agent.
+> **Status: implemented** at `/` (`frontend/src/landing/`). This document is the spec
+> it was built from. Where the build differs from the plan:
+>
+> - **Motion without a library.** Reveals use IntersectionObserver and the Path/hero use
+>   requestAnimationFrame instead of Framer Motion — same effects, no dependency; the
+>   landing ships ~83 KB of JS gzipped because the workspace pages are lazy-loaded.
+> - **System fonts** (Inter when installed, otherwise the platform sans) instead of
+>   self-hosted font files.
+> - **Linked explanation** highlights the factor chips next to the formula (the hero card
+>   is off-screen by then), which keeps the interaction visible.
+> - **Data** comes from `backend/scripts/export_landing_fixtures.py` (real engine/API
+>   output, AI rationales in kk/ru/en); the OG image from `backend/scripts/render_og_image.py`.
 
 ---
 

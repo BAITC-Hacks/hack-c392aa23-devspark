@@ -7,7 +7,7 @@ import importlib
 import io
 import json
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -211,6 +211,14 @@ class CareerStore:
         self.persist_history(row)
         self._sync_engine_dataset()
         return row
+
+    def record_landing_event(self, event: dict[str, Any]) -> None:
+        """Append an anonymous landing event; never stores personal data."""
+
+        self.runtime_dir.mkdir(parents=True, exist_ok=True)
+        entry = {"at": datetime.now(timezone.utc).isoformat(timespec="seconds"), **event}
+        with (self.runtime_dir / "landing_events.jsonl").open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
     def add_not_now(self, employee_id: str, event_id: str) -> None:
         self.runtime_dir.mkdir(parents=True, exist_ok=True)

@@ -91,3 +91,16 @@ def test_hr_overview_includes_attrition_and_disengaged(client: TestClient):
     assert isinstance(overview["disengaged"], list)
     for risk in overview["attrition_risk"]:
         assert risk["level"] in {"low", "medium", "high"} and risk["reasons"]
+
+
+def test_landing_event_is_recorded_without_auth(client: TestClient):
+    response = client.post("/api/landing/events", json={"event": "demo_opened", "profile": "E0028", "lang": "ru"})
+    assert response.status_code == 204
+    log = client.app.state.store.runtime_dir / "landing_events.jsonl"
+    entry = json.loads(log.read_text().strip().splitlines()[-1])
+    assert entry["event"] == "demo_opened" and entry["profile"] == "E0028" and entry["at"]
+
+
+def test_landing_event_rejects_unknown_event_and_extra_fields(client: TestClient):
+    assert client.post("/api/landing/events", json={"event": "page_view"}).status_code == 422
+    assert client.post("/api/landing/events", json={"event": "demo_opened", "email": "x@y.z"}).status_code == 422

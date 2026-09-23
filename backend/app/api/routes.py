@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from starlette.datastructures import UploadFile
 
 from app.api import service
@@ -28,6 +28,7 @@ from app.models import (
     RecommendationResult,
     AskRequest,
     AskResponse,
+    LandingEvent,
 )
 from app.store import CareerStore
 
@@ -154,3 +155,10 @@ async def import_data(request: Request, store: Store, _: Principal = Depends(req
         filename = value.filename or field_name
         uploads.append((filename, await value.read()))
     return ImportReport.model_validate(store.import_files(uploads))
+
+
+@router.post("/landing/events", status_code=status.HTTP_204_NO_CONTENT)
+def landing_event(payload: LandingEvent, store: Store) -> Response:
+    """Anonymous landing analytics (demo_opened / contact_clicked), stored in data/runtime."""
+    store.record_landing_event(payload.model_dump())
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
