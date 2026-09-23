@@ -114,3 +114,31 @@ def test_high_gap_employee_still_gets_recommendation_below_old_floor():
     result = recommend(ds, "E1")
     assert [rec.event_id for rec in result.recommendations] == ["EV_ONE"]
     assert result.empty_reason is None
+
+
+def test_recurring_club_stays_eligible_after_completion():
+    ds = dataset(event("EV_036", skill="SK_A"), history_rows=[history("R1", "EV_036", "completed", "2026-09-10")])
+    assert candidate(ds, "EV_036").eligible
+
+
+def test_non_recurring_completed_event_is_blocked():
+    ds = dataset(event("EV_X", skill="SK_A"), history_rows=[history("R1", "EV_X", "completed", "2026-09-10")])
+    assert candidate(ds, "EV_X").blocked_by == "ALREADY_COMPLETED"
+
+
+def test_remote_employee_offline_event_gets_fit_penalty():
+    office = dataset(event("EV_OFF", skill="SK_A", format="offline"))
+    remote_employee = {**office.employees["E1"], "work_format": "remote"}
+    remote = dataset(event("EV_OFF", skill="SK_A", format="offline"), employee=remote_employee)
+    assert candidate(remote, "EV_OFF").fit < candidate(office, "EV_OFF").fit
+
+
+def test_scored_pool_and_recommend_for_events_are_consistent():
+    from app.engine.recommender import recommend_for_events, scored_pool
+    ds = dataset(event("EV_A", skill="SK_A"), event("EV_B", skill="SK_B"))
+    pool_ids = {item.event["event_id"] for item in scored_pool(ds, "E1", 8)}
+    assert pool_ids == {"EV_A", "EV_B"}
+    result = recommend_for_events(ds, "E1", ["EV_B", "EV_A"], generated_by="llm")
+    assert [rec.event_id for rec in result.recommendations] == ["EV_B", "EV_A"]
+    assert result.generated_by == "llm"
+    assert recommend_for_events(ds, "E1", ["EV_MISSING"]) is None
