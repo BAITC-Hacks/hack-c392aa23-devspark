@@ -284,11 +284,22 @@ class DisengagedEmployee(ApiModel):
     completions_6m: int
 
 
+class AttritionRisk(ApiModel):
+    employee_id: str
+    full_name: str
+    role: str
+    grade: str
+    risk: int  # 0-100
+    level: Literal["low", "medium", "high"]
+    reasons: list[str]
+
+
 class HrOverview(ApiModel):
     lagging_skills: list[LaggingSkill]
     no_step: list[NoStepEmployee]
     participation: list[Participation]
     disengaged: list[DisengagedEmployee]
+    attrition_risk: list[AttritionRisk] = []
 
 
 # Imports

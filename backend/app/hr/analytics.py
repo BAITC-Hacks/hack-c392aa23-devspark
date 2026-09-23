@@ -25,8 +25,10 @@ def overview(store: CareerStore, department: str | None = None) -> HrOverview:
     employees = [employee for employee in store.employees.values() if not department or employee["department"] == department]
     lagging: dict[str, dict[str, Any]] = {}
     no_step = []
+    readiness_by_id: dict[str, float] = {}
     for employee in employees:
         employee_profile = profile(store, employee["employee_id"])
+        readiness_by_id[employee["employee_id"]] = employee_profile.readiness.pct
         for skill in employee_profile.skills:
             gap = max(0, skill.required_target - skill.effective)
             if not gap:
@@ -56,7 +58,54 @@ def overview(store: CareerStore, department: str | None = None) -> HrOverview:
         completion_rate = round(item["completed"] / total, 4) if total else 0.0
         participation.append({"event_id": event_id, "title": event["title"], "type": event["type"], **item, "completion_rate": completion_rate, "avg_rating": round(sum(ratings[event_id]) / len(ratings[event_id]), 2) if ratings[event_id] else None, "flagged": bool(total and (item["no_show"] + item["dropped"]) / total > 0.25)})
     disengaged = _disengaged(store, employees)
-    return HrOverview.model_validate({"lagging_skills": sorted(lagging_skills, key=lambda item: item["employees_below"], reverse=True)[:15], "no_step": no_step, "participation": participation, "disengaged": disengaged})
+    attrition_risk = _attrition_risk(store, employees, readiness_by_id)
+    return HrOverview.model_validate({"lagging_skills": sorted(lagging_skills, key=lambda item: item["employees_below"], reverse=True)[:15], "no_step": no_step, "participation": participation, "disengaged": disengaged, "attrition_risk": attrition_risk})
+
+
+def _attrition_risk(store: CareerStore, employees: list[dict[str, Any]], readiness_by_id: dict[str, float]) -> list[dict[str, Any]]:
+    """Transparent attrition-risk signal from disengagement, overdue work, stalled
+    progress and missing goals. Every point is explained; it prompts a conversation."""
+
+    cutoff = (store.as_of_date - timedelta(days=182)).isoformat()
+    window: dict[str, dict[str, int]] = defaultdict(lambda: {"neg": 0, "overdue": 0, "pos": 0})
+    for row in store.history:
+        if str(row.get("date")) < cutoff:
+            continue
+        bucket = window[row["employee_id"]]
+        if row["status"] == "overdue":
+            bucket["overdue"] += 1
+            bucket["neg"] += 1
+        elif row["status"] in NEGATIVE:
+            bucket["neg"] += 1
+        elif row["status"] == "completed":
+            bucket["pos"] += 1
+
+    risks: list[dict[str, Any]] = []
+    for employee in employees:
+        eid = employee["employee_id"]
+        counts = window.get(eid, {"neg": 0, "overdue": 0, "pos": 0})
+        risk, reasons = 0, []
+        if counts["neg"] >= 2:
+            risk += 25
+            reasons.append(f"{counts['neg']} refusals or no-shows in 6 months")
+        if counts["overdue"] > 0:
+            risk += 25
+            reasons.append(f"{counts['overdue']} overdue mandatory item(s)")
+        if counts["pos"] == 0:
+            risk += 20
+            reasons.append("no voluntary activity completed in 6 months")
+        readiness = readiness_by_id.get(eid, 100.0)
+        if readiness < 50 and employee.get("tenure_months", 0) >= 24:
+            risk += 20
+            reasons.append(f"low readiness ({readiness:.0f}%) after {employee['tenure_months'] // 12}+ years")
+        if employee.get("career_goal") is None and employee.get("grade") != "Lead":
+            risk += 10
+            reasons.append("no career goal set")
+        risk = min(100, risk)
+        if risk >= 35 and reasons:
+            risks.append({"employee_id": eid, "full_name": employee["full_name"], "role": employee["role"],
+                          "grade": employee["grade"], "risk": risk, "level": "high" if risk >= 60 else "medium", "reasons": reasons})
+    return sorted(risks, key=lambda item: item["risk"], reverse=True)[:12]
 
 
 def _disengaged(store: CareerStore, employees: list[dict[str, Any]]) -> list[dict[str, Any]]:
