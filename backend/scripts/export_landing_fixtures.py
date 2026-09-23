@@ -176,12 +176,16 @@ def main() -> int:
 
             # ---- HR preview (initials only: the landing practises what it preaches) --
             overview = get("/api/hr/overview")
-            participation = sorted(overview["participation"], key=lambda p: -(p["completed"] + p["no_show"] + p["declined"] + p["dropped"]))
+            # Voluntary activities only (mandatory training is not a recommendation target),
+            # drop-off first: that is the signal HR can act on.
+            voluntary = [p for p in overview["participation"] if not ds.events.get(p["event_id"], {}).get("mandatory")]
+            participation = sorted(voluntary, key=lambda p: (not p["flagged"], -(p["completed"] + p["no_show"] + p["declined"] + p["dropped"])))
             hr_preview = {
                 "lagging": [{k: s[k] for k in ("name", "employees_below", "avg_gap", "critical_count")} for s in overview["lagging_skills"][:5]],
                 "no_step": [{"who": initials(p["full_name"]), "role": p["role"], "grade": p["grade"], "reason": p["reason_code"], "hint": p["hint"]} for p in overview["no_step"][:3]],
                 "participation": [{"title": p["title"], "rate": p["completion_rate"], "flagged": p["flagged"], "rating": p["avg_rating"]} for p in participation[:6]],
-                "attrition": [{"who": initials(p["full_name"]), "role": p["role"], "grade": p["grade"], "risk": p["risk"], "level": p["level"], "reasons": p["reasons"]} for p in overview["attrition_risk"][:3]],
+                "attrition": [{"who": initials(p["full_name"]), "role": p["role"], "grade": p["grade"], "risk": p["risk"], "level": p["level"], "reasons": p["reasons"],
+                               "reasons_i18n": {lang: translate(client, model, p["reasons"], lang) for lang in LANGS}} for p in overview["attrition_risk"][:3]],
                 "no_step_total": len(overview["no_step"]),
             }
 

@@ -77,9 +77,9 @@
       "readiness_after": 78.79,
       "generated_by": "llm",
       "rationale": {
-        "en": "Leadership Foundations boosts your Stakeholder Management and Leadership skills, both needed for Senior. Despite a lower past online engagement, this course fits your hybrid work style and is available soon. It's a great step to close key gaps and align with your promotion goals.",
-        "ru": "Leadership Foundations повышает ваши навыки управления заинтересованными сторонами и лидерства, которые необходимы для уровня Senior. Несмотря на низкую прошлую онлайн-активность, этот курс подходит вашему гибридному стилю работы и скоро будет доступен. Это отличный шаг для устранения ключевых пробелов и согласования с вашими целями по повышению.",
-        "kk": "Leadership Foundations сіздің Stakeholder Management және Leadership дағдыларыңызды арттырады, бұл екеуі де Senior деңгейі үшін қажет. Өткендегі төмен онлайн қатысуына қарамастан, бұл курс сіздің гибридті жұмыс стиліңізге сәйкес келеді және жақында қолжетімді болады. Бұл негізгі олқылықтарды жоюға және көтермелеу мақсаттарыңызға сәйкес келуге тамаша қадам."
+        "en": "Boost your Leadership and Stakeholder Management skills, both needed for Senior. Despite a mixed history with online courses, this one fits your hybrid work style and is available soon. It directly targets your promotion gaps and aligns well with your goals.",
+        "ru": "Повышайте свои навыки лидерства и управления заинтересованными сторонами, которые необходимы для уровня Senior. Несмотря на смешанную историю с онлайн-курсами, этот курс подходит вашему гибридному стилю работы и скоро будет доступен. Он напрямую нацелен на ваши пробелы для повышения и хорошо соответствует вашим целям.",
+        "kk": "Жетекшілік және мүдделі тараптарды басқару дағдыларыңызды жетілдіріңіз, бұл екеуі де аға деңгейге қажет. Онлайн курстармен аралас тарихыңыз болса да, бұл курс сіздің аралас жұмыс стиліңізге сай келеді және жақында қолжетімді болады. Ол тікелей сіздің қызметтік өсуіңіздегі олқылықтарды нысанаға алады және мақсаттарыңызға жақсы сәйкес келеді."
       },
       "factor_labels": {
         "en": [
@@ -92,21 +92,21 @@
           "Next session in 2026-10-08; availability 1.00"
         ],
         "ru": [
-          "Leadership 1 → 2 требуется для Senior",
+          "Leadership 1 → 2 required for Senior",
           "Leadership Foundations повышает Leadership 1 → 2",
-          "Stakeholder Management 1 → 2 требуется для Senior",
+          "Stakeholder Management 1 → 2 required for Senior",
           "Leadership Foundations повышает Stakeholder Management 1 → 2",
           "Похожая история активности: 0.0 положительных, 1.0 отрицательных; склонность 0.33",
-          "онлайн-уровень завершения 50%; соответствие 0.50",
+          "уровень завершения онлайн 50%; соответствие 0.50",
           "Следующая сессия 2026-10-08; доступность 1.00"
         ],
         "kk": [
-          "Leadership 1 → 2 Senior деңгейі үшін қажет",
+          "Leadership 1 → 2 required for Senior",
           "Leadership Foundations Leadership 1 → 2 деңгейін көтереді",
-          "Stakeholder Management 1 → 2 Senior деңгейі үшін қажет",
+          "Stakeholder Management 1 → 2 required for Senior",
           "Leadership Foundations Stakeholder Management 1 → 2 деңгейін көтереді",
-          "Ұқсас әрекет тарихы: 0.0 оң, 1.0 теріс; ықтималдық 0.33",
-          "онлайн аяқтау көрсеткіші 50%; сәйкес келу 0.50",
+          "Ұқсас іс-әрекет тарихы: 0.0 оң, 1.0 теріс; ықтималдық 0.33",
+          "онлайн аяқтау көрсеткіші 50%; сәйкестік 0.50",
           "Келесі сессия 2026-10-08; қолжетімділік 1.00"
         ]
       }
@@ -194,9 +194,9 @@
       "readiness_after": 74.24,
       "generated_by": "llm",
       "rationale": {
-        "en": "System Design Fundamentals is perfect to close your critical gaps in System Design and API Design, both essential for your Senior role. It fits your online preference well and is available soon. This course offers a strong expected skill gain and aligns with your promotion goals.",
-        "ru": "Основы проектирования систем идеально подходят для устранения ваших критических пробелов в проектировании систем и API, что важно для вашей старшей роли. Он хорошо соответствует вашему предпочтению онлайн-обучения и скоро будет доступен. Этот курс предлагает значительный ожидаемый прирост навыков и соответствует вашим целям по повышению.",
-        "kk": "System Design Fundamentals сіздің Senior рөліңіз үшін маңызды System Design және API Design саласындағы маңызды олқылықтарды жоюға өте қолайлы. Бұл сіздің онлайнға деген қалауыңызға жақсы сәйкес келеді және жақында қолжетімді болады. Бұл курс күтілетін дағдыларды айтарлықтай арттырады және сіздің қызметтік өсу мақсаттарыңызға сәйкес келеді."
+        "en": "System Design Fundamentals is perfect to close your critical gaps in System Design and API Design, boosting your skills from 2 to 3. It fits your online preference well and is available soon. This course aligns directly with your Senior Backend Engineer target.",
+        "ru": "Основы проектирования систем идеально подходят для устранения ваших критических пробелов в проектировании систем и API, повышая ваши навыки с 2 до 3. Курс хорошо соответствует вашему предпочтению онлайн и скоро будет доступен. Этот курс напрямую соответствует вашей цели стать старшим бэкенд-инженером.",
+        "kk": "System Design Fundamentals жүйелік дизайн және API дизайндағы маңызды олқылықтарыңызды жоюға өте қолайлы, дағдыларыңызды 2-ден 3-ке дейін арттырады. Бұл сіздің онлайнға деген қалауыңызға жақсы сәйкес келеді және жақында қолжетімді болады. Бұл курс тікелей Senior Backend Engineer мақсатыңызға сәйкес келеді."
       },
       "factor_labels": {
         "en": [
@@ -214,7 +214,7 @@
           "API Design 2 → 4 required for Senior (critical)",
           "Основы проектирования систем повышают API Design 2 → 3",
           "Похожая история активности: 0.0 положительных, 0.0 отрицательных; склонность 0.50",
-          "уровень завершения онлайн 80%; соответствие 0.80",
+          "онлайн уровень завершения 80%; соответствие 0.80",
           "Следующая сессия 2026-11-23; доступность 0.80"
         ],
         "kk": [
@@ -224,7 +224,7 @@
           "System Design Fundamentals API Design 2 → 3 деңгейін көтереді",
           "Ұқсас әрекет тарихы: 0.0 оң, 0.0 теріс; ықтималдық 0.50",
           "онлайн аяқтау көрсеткіші 80%; сәйкес келу 0.80",
-          "Келесі сессия 2026-11-23 күні; қолжетімділік 0.80"
+          "Келесі сессия 2026-11-23; қолжетімділік 0.80"
         ]
       }
     }
@@ -313,40 +313,40 @@
     ],
     "participation": [
       {
-        "title": "Code of Conduct & Workplace Safety",
-        "rate": 0.948,
-        "flagged": false,
-        "rating": null
+        "title": "Leadership Foundations",
+        "rate": 0.7077,
+        "flagged": true,
+        "rating": 3.79
       },
       {
-        "title": "Personal Data Protection",
-        "rate": 0.9072,
-        "flagged": false,
-        "rating": null
+        "title": "Cloud Certification Prep",
+        "rate": 0.6667,
+        "flagged": true,
+        "rating": 3.46
       },
       {
-        "title": "Information Security Awareness",
-        "rate": 0.9063,
-        "flagged": false,
-        "rating": null
+        "title": "System Design Fundamentals",
+        "rate": 0.6364,
+        "flagged": true,
+        "rating": 3.68
       },
       {
-        "title": "Public Speaking Club",
-        "rate": 0.6856,
-        "flagged": false,
-        "rating": 4.21
-      },
-      {
-        "title": "Structured Problem Solving",
-        "rate": 0.6643,
-        "flagged": false,
-        "rating": 4.03
-      },
-      {
-        "title": "Business Writing & Documentation",
-        "rate": 0.7759,
-        "flagged": false,
+        "title": "Secure Coding Workshop",
+        "rate": 0.5946,
+        "flagged": true,
         "rating": 3.9
+      },
+      {
+        "title": "Advanced Python",
+        "rate": 0.5676,
+        "flagged": true,
+        "rating": 3.35
+      },
+      {
+        "title": "API & Performance Testing Workshop",
+        "rate": 0.5714,
+        "flagged": true,
+        "rating": 3.56
       }
     ],
     "attrition": [
@@ -361,7 +361,27 @@
           "1 overdue mandatory item(s)",
           "no voluntary activity completed in 6 months",
           "no career goal set"
-        ]
+        ],
+        "reasons_i18n": {
+          "en": [
+            "4 refusals or no-shows in 6 months",
+            "1 overdue mandatory item(s)",
+            "no voluntary activity completed in 6 months",
+            "no career goal set"
+          ],
+          "ru": [
+            "4 отказа или неявки за 6 месяцев",
+            "1 просроченный обязательный пункт(ы)",
+            "нет выполненной добровольной активности за 6 месяцев",
+            "цель карьеры не установлена"
+          ],
+          "kk": [
+            "6 айда 4 бас тарту немесе келмеу",
+            "1 мерзімі өткен міндетті элемент(тер)",
+            "6 айда ерікті іс-шаралар орындалмады",
+            "мансап мақсаты белгіленбеген"
+          ]
+        }
       },
       {
         "who": "R. M.",
@@ -373,7 +393,24 @@
           "1 overdue mandatory item(s)",
           "no voluntary activity completed in 6 months",
           "low readiness (44%) after 2+ years"
-        ]
+        ],
+        "reasons_i18n": {
+          "en": [
+            "1 overdue mandatory item(s)",
+            "no voluntary activity completed in 6 months",
+            "low readiness (44%) after 2+ years"
+          ],
+          "ru": [
+            "1 просроченный обязательный пункт",
+            "нет выполненной добровольной активности за 6 месяцев",
+            "низкая готовность (44%) после 2+ лет"
+          ],
+          "kk": [
+            "1 мерзімі өткен міндетті элемент(тер)",
+            "6 ай ішінде ерікті іс-шаралар орындалмады",
+            "2+ жылдан кейін төмен дайындық (44%)"
+          ]
+        }
       },
       {
         "who": "K. L.",
@@ -385,7 +422,24 @@
           "1 overdue mandatory item(s)",
           "no voluntary activity completed in 6 months",
           "low readiness (48%) after 4+ years"
-        ]
+        ],
+        "reasons_i18n": {
+          "en": [
+            "1 overdue mandatory item(s)",
+            "no voluntary activity completed in 6 months",
+            "low readiness (48%) after 4+ years"
+          ],
+          "ru": [
+            "1 просроченный обязательный пункт",
+            "нет выполненной добровольной активности за 6 месяцев",
+            "низкая готовность (48%) после 4+ лет"
+          ],
+          "kk": [
+            "1 мерзімі өткен міндетті элемент(тер)",
+            "6 ай ішінде ерікті іс-шаралар орындалмады",
+            "4 жылдан астам уақыттан кейін төмен дайындық (48%)"
+          ]
+        }
       }
     ],
     "no_step_total": 31
@@ -421,7 +475,7 @@
     "traps_passed": 8,
     "traps_total": 8,
     "rules_ms": 2.1,
-    "ai_ms": 4342,
+    "ai_ms": 3608,
     "model": "gpt-4.1-mini"
   }
 }
