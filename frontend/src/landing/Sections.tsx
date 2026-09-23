@@ -243,7 +243,7 @@ export function HrPreview() {
           <div className="grid gap-5 md:col-span-2 md:grid-cols-2 xl:col-span-1 xl:grid-cols-1">
             <Reveal delay={240} className="lp-card p-6">
               <h3 className="font-semibold">{t.hr.participation}</h3>
-              <ul className="mt-4 space-y-3 text-sm">{hr.participation.map((event) => <li key={event.title}><div className="flex items-center justify-between gap-2"><span className="truncate">{event.title}</span><span className="lp-num lp-muted">{Math.round(event.rate * 100)}%</span></div><div className="lp-bar mt-1.5"><i style={{ width: `${event.rate * 100}%`, background: event.flagged ? 'var(--lp-amber)' : undefined }} /></div>{event.flagged && <span className="mt-1 inline-block text-[11px] text-[var(--lp-amber)]">⚑ {t.hr.dropOff}</span>}</li>)}</ul>
+              <ul className="mt-4 space-y-3 text-sm">{hr.participation.map((event) => <li key={event.title}><div className="flex items-start justify-between gap-3"><span className="min-w-0">{event.title}</span><span className="lp-num shrink-0 lp-muted">{Math.round(event.rate * 100)}%</span></div><div className="lp-bar mt-1.5"><i style={{ width: `${event.rate * 100}%`, background: event.flagged ? 'var(--lp-amber)' : undefined }} /></div>{event.flagged && <span className="mt-1 inline-block text-[11px] text-[var(--lp-amber)]">⚑ {t.hr.dropOff}</span>}</li>)}</ul>
             </Reveal>
             <Reveal delay={300} className="lp-sand p-6"><p className="text-[15px] font-semibold leading-7">{t.hr.principle}</p></Reveal>
           </div>
@@ -293,7 +293,7 @@ export function Multilingual() {
               {LANGS.map((code) => <button key={code} type="button" aria-pressed={selected === code} onClick={() => setSelected(code)}>{LANG_CHIP[code]}</button>)}
             </div>
           </div>
-          <p key={selected} lang={selected} className="lp-fade mt-5 min-h-[7.5rem] leading-7">{card.rationale[selected]}</p>
+          <p className="mt-5 grid leading-7">{LANGS.map((code) => <span key={code} aria-hidden="true" className="invisible col-start-1 row-start-1">{card.rationale[code]}</span>)}<span key={selected} lang={selected} className="lp-fade col-start-1 row-start-1">{card.rationale[selected]}</span></p>
         </Reveal>
       </div>
     </section>

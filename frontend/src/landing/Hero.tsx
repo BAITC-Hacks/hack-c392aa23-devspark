@@ -81,12 +81,19 @@ function HeroCard() {
           </div>
           <p className="mt-3 text-lg font-semibold">{card.title}</p>
           <p className="text-xs text-slate-500">{t.types[card.type] ?? card.type} · {t.formats[card.format] ?? card.format} · {fmt(t.hero.hours, { n: card.duration_hours })} · {shortDate(card.next_session, shown)}</p>
-          <div className="mt-3 flex min-h-[4.5rem] flex-wrap content-start gap-1.5">
-            {chips.map((index, order) => <span key={index} className={`lp-chip ${card.factors[index].kind === 'critical_gap' ? 'lp-chip-critical' : ''} ${e > 2400 + order * 380 ? 'opacity-100' : 'translate-y-1 opacity-0'}`}>{card.factor_labels[shown][index]}</span>)}
+          {/* Invisible copies in every language share the grid cell, so the card never jumps as the text morphs. */}
+          <div className="mt-3 grid">
+            {LANGS.map((code) => <div key={code} aria-hidden="true" className="invisible col-start-1 row-start-1 flex flex-wrap content-start gap-1.5">{chips.map((index) => <span key={index} className="lp-chip">{card.factor_labels[code][index]}</span>)}</div>)}
+            <div className="col-start-1 row-start-1 flex flex-wrap content-start gap-1.5">
+              {chips.map((index, order) => <span key={index} className={`lp-chip ${card.factors[index].kind === 'critical_gap' ? 'lp-chip-critical' : ''} ${e > 2400 + order * 380 ? 'opacity-100' : 'translate-y-1 opacity-0'}`}>{card.factor_labels[shown][index]}</span>)}
+            </div>
           </div>
-          <p className="mt-3 min-h-[6.2rem] text-sm leading-6 text-slate-700" aria-live="off">
-            {e > 3900 && <span key={shown} className={phase === 0 ? '' : 'lp-fade'}>{text}</span>}
-            {phase === 0 && typed > 0 && typed < 1 && <span className="lp-caret" />}
+          <p className="mt-3 grid text-sm leading-6 text-slate-700" aria-live="off">
+            {LANGS.map((code) => <span key={code} aria-hidden="true" className="invisible col-start-1 row-start-1">{card.rationale[code]}</span>)}
+            <span className="col-start-1 row-start-1">
+              {e > 3900 && <span key={shown} className={phase === 0 ? '' : 'lp-fade'}>{text}</span>}
+              {phase === 0 && typed > 0 && typed < 1 && <span className="lp-caret" />}
+            </span>
           </p>
           <div className={`mt-3 flex flex-wrap gap-2 text-xs transition-opacity duration-500 ${e > 3400 ? 'opacity-100' : 'opacity-0'}`}>
             {gain && <span className="rounded-lg bg-[#f3f7f5] px-2.5 py-1.5">{t.hero.expectedGain} <b>{gain.skill} {gain.from} → {gain.to}</b></span>}

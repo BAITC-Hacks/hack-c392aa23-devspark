@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { api, auth } from '../api/client'
 import type { HrOverview, ImportReport } from '../api/types'
 
@@ -55,21 +56,23 @@ export function HrPage({ onSignOut }: { onSignOut: () => void }) {
     <main className="min-h-screen bg-mist px-5 py-8">
       <div className="mx-auto max-w-6xl">
         <header className="topbar">
-          <span className="brand"><span className="grid h-9 w-9 place-items-center rounded-xl bg-ink text-[#b9e5b4]">↗</span> CAREER QUEST · HR</span>
+          <Link to="/" className="brand" title="Career Quest"><span className="grid h-9 w-9 place-items-center rounded-xl bg-ink text-[#b9e5b4]">↗</span> CAREER QUEST · HR</Link>
           <button onClick={onSignOut} className="signout">Sign out</button>
         </header>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="mt-6 grid gap-6 lg:grid-cols-2 [&>*]:min-w-0">
           {/* Lagging skills */}
           <section className="card">
             <p className="eyebrow">Where skills lag most</p>
             <h2 className="section-title">Lagging competencies</h2>
             <div className="mt-5 space-y-3">
               {data.lagging_skills.slice(0, 10).map((skill) => (
-                <div key={skill.skill_id} className="flex items-center gap-3 text-sm">
-                  <span className="w-40 shrink-0 text-ink">{skill.name}{skill.critical_count > 0 && <span className="pill pill-amber ml-2">critical ×{skill.critical_count}</span>}</span>
-                  <Bar value={skill.employees_below} max={maxLag} tone={skill.critical_count > 0 ? 'amber' : 'pine'} />
-                  <span className="w-28 shrink-0 text-right text-slate-500">{skill.employees_below} below · gap {skill.avg_gap.toFixed(1)}</span>
+                <div key={skill.skill_id} className="text-sm">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="flex min-w-0 flex-wrap items-center gap-2 text-ink">{skill.name}{skill.critical_count > 0 && <span className="pill pill-amber">critical ×{skill.critical_count}</span>}</span>
+                    <span className="shrink-0 whitespace-nowrap text-slate-500">{skill.employees_below} below · gap {skill.avg_gap.toFixed(1)}</span>
+                  </div>
+                  <div className="mt-1.5 flex"><Bar value={skill.employees_below} max={maxLag} tone={skill.critical_count > 0 ? 'amber' : 'pine'} /></div>
                 </div>
               ))}
             </div>
@@ -85,7 +88,7 @@ export function HrPage({ onSignOut }: { onSignOut: () => void }) {
                   {data.no_step.map((person) => (
                     <tr key={person.employee_id} className="border-b border-line/70 align-top">
                       <td className="py-2 pr-3"><b className="text-ink">{person.full_name}</b><br /><small className="text-slate-500">{person.role} · {person.grade}</small></td>
-                      <td className="py-2 pr-3"><span className="pill pill-slate">{REASON_LABEL[person.reason_code] ?? person.reason_code}</span></td>
+                      <td className="py-2 pr-3"><span className="pill pill-slate whitespace-nowrap">{REASON_LABEL[person.reason_code] ?? person.reason_code}</span></td>
                       <td className="py-2 text-slate-600">{person.hint}</td>
                     </tr>
                   ))}
@@ -99,7 +102,7 @@ export function HrPage({ onSignOut }: { onSignOut: () => void }) {
             <p className="eyebrow">How activities perform</p>
             <h2 className="section-title">Participation by activity</h2>
             <div className="mt-4 overflow-auto">
-              <table className="w-full text-sm">
+              <table className="w-full min-w-[560px] text-sm">
                 <thead className="text-left text-slate-500">
                   <tr className="border-b border-line">
                     <th className="py-2 pr-3 font-medium">Activity</th>
@@ -135,7 +138,7 @@ export function HrPage({ onSignOut }: { onSignOut: () => void }) {
             {data.disengaged.length === 0 ? <p className="mt-4 text-sm text-slate-500">No one is flagged as disengaging right now.</p> : (
               <ul className="mt-4 space-y-2 text-sm">
                 {data.disengaged.map((person) => (
-                  <li key={person.employee_id} className="flex items-center justify-between border-b border-line/70 py-2">
+                  <li key={person.employee_id} className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-line/70 py-2">
                     <span className="text-ink">{person.full_name}</span>
                     <span className="text-slate-500">{person.negatives_6m} refusals · {person.completions_6m} completed · 6&nbsp;mo</span>
                   </li>
@@ -153,8 +156,8 @@ export function HrPage({ onSignOut }: { onSignOut: () => void }) {
               <ul className="mt-4 space-y-3 text-sm">
                 {data.attrition_risk.slice(0, 8).map((person) => (
                   <li key={person.employee_id} className="border-b border-line/70 pb-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-ink">{person.full_name} <small className="text-slate-500">· {person.role} · {person.grade}</small></span>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="min-w-0 text-ink">{person.full_name} <small className="text-slate-500">· {person.role} · {person.grade}</small></span>
                       <span className={`pill ${person.level === 'high' ? 'pill-amber' : 'pill-slate'}`}>{person.level} · {person.risk}</span>
                     </div>
                     <p className="mt-1 text-slate-500">{person.reasons.join(' · ')}</p>
