@@ -37,16 +37,12 @@ Where the points come from:
 | **17:30 code freeze** | Only README fixes after this | Submit on the platform (§8) | |
 | 17:45–18:00 | Buffer. Do not touch code. | | |
 
-## 3. Git and Codex workflow (all three envs on one Mac)
+## 3. Git and Codex workflow
 
-1. Three clones on the Mac (`cq-A`, `cq-B`, `cq-C`), managed by the `cq` script outside this repo. Each clone commits as its owner (GitHub noreply email), so GitHub counts those commits for that person.
-2. Each owner logs in once with `./cq login <X>`: GitHub and Codex device codes, approved on their OWN laptop. No passwords are typed on the Mac. Without a login, the env pushes through the Mac owner's account; the commits still count for the env's owner.
-3. One Terminal tab per env: `./cq A`, `./cq B`, `./cq C`, then `codex`. Each env's owner drives its prompts and reviews its diffs.
-4. Work on `main`, only in your own directories (`AGENTS.md §3`). `git pull --rebase` before every push; push every 20–30 min. `./cq status` shows who is ahead/behind; `./cq sync` pulls all three.
-5. Contract changes (`backend/app/models.py`, `AGENTS.md §7`) = one `contract:` commit + say it out loud.
-
-Ports: B runs the backend on :8000 and Docker; C runs Vite on :5173 (proxy → :8000); A runs tests only.
-No shared passwords or tokens: every login is approved by its owner and can be revoked after the hackathon (GitHub → Settings → Applications).
+1. Each person works in their own clone, with their own git identity and their own Codex session.
+2. Work on `main`, only in your own directories (`AGENTS.md §3`). `git pull --rebase` before every push; push every 20–30 min.
+3. Contract changes (`backend/app/models.py`, `AGENTS.md §7`) = one `contract:` commit + say it out loud.
+4. Local ports: backend :8000, Vite dev server :5173 (proxies `/api` → :8000).
 
 ## 4. Codex prompts (copy-paste)
 
@@ -153,7 +149,7 @@ Read AGENTS.md. Polish without changing the API: friendly empty states for every
 ## 5. Checkpoint checklists
 
 **CP1 (15:20)** — all must be true:
-1. `make dev` runs backend + frontend on one laptop.
+1. `make dev` runs backend + frontend locally.
 2. Log in as E0028 → profile, trajectory, 1–3 recommendations, each with ≥3 factors.
 3. Mark completed → a skill and readiness change on screen.
 4. HR page shows lagging skills (even if other widgets are stubs).
@@ -195,7 +191,7 @@ Demo:
 
 Submission (B, 17:30):
 1. `git grep -nE "sk-[A-Za-z0-9_-]{20,}|nvapi-"` prints nothing, and `git ls-files | grep .env` shows only `.env.example`.
-2. Fresh clone into a new folder (not a `cq-*` clone) → `docker compose up --build` → full demo works.
+2. Fresh clone into a new folder → `docker compose up --build` → full demo works.
 3. README renders on GitHub: all 11 organizer sections + eval table + screenshots.
 4. GitHub → Insights → Contributors shows all three people.
 5. Platform → track page → "Сдать решение" → title + description.

@@ -157,5 +157,6 @@ Activity actions: `complete` → history row `status=completed, completion_pct=1
 - Small commits (≤ 30 min of work), message `area: what` (`engine: cap gains by max_level`). `git pull --rebase` before push. Never force-push `main`.
 - Before committing: backend `cd backend && pytest -q`; frontend `cd frontend && npm run build`.
 - No heavy dependencies, no boilerplate repos, no reformatting files you don't own.
+- Never bypass git hooks (`--no-verify`); fix what the hook reports instead.
 - Need a contract change or something from another owner? Don't edit their files. Put the request in your final message.
 - End every task with: what now works (one line), how to check it (one command), open issues.
