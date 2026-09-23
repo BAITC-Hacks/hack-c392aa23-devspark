@@ -1,0 +1,58 @@
+{
+  "E9001": {
+    "trap": "Lowest skill (Public Speaking) refused 3x; critical System Design gap",
+    "must_not_include": [
+      "EV_036",
+      "EV_023"
+    ],
+    "must_include_any": [
+      "EV_005",
+      "EV_006",
+      "EV_007"
+    ]
+  },
+  "E9002": {
+    "trap": "System Design looks low (2) but completions after review raise it to 4",
+    "must_not_include": [
+      "EV_005",
+      "EV_006",
+      "EV_007"
+    ]
+  },
+  "E9003": {
+    "trap": "Goal is a different role (QA -> Backend); recommend for the target role",
+    "target_role": "Backend Engineer",
+    "must_include_any": [
+      "EV_005",
+      "EV_012"
+    ]
+  },
+  "E9004": {
+    "trap": "System Design=1 blocks the advanced events; the no-prerequisite builder comes first",
+    "must_include_any": [
+      "EV_005"
+    ],
+    "must_not_include": [
+      "EV_006",
+      "EV_007"
+    ]
+  },
+  "E9005": {
+    "trap": "Cloud/CICD already at the event's max level; that event cannot help",
+    "must_not_include": [
+      "EV_009"
+    ]
+  },
+  "E9006": {
+    "trap": "Lead with no career goal; nothing to recommend",
+    "empty_reason": "AT_TOP_NO_GOAL"
+  },
+  "E9007": {
+    "trap": "Remote employee avoids offline (no-shows) but finishes self-paced work",
+    "first_format_not": "offline"
+  },
+  "E9008": {
+    "trap": "Already meets every Senior requirement; no gap remains",
+    "empty_reason": "TARGET_REACHED"
+  }
+}
