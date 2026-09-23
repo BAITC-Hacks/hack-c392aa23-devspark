@@ -74,7 +74,9 @@ function HeroCard() {
           <div className="lp-ladder">{GRADES.map((grade, index) => <div key={grade} className={`${index === current && e > 500 ? 'is-current' : ''} ${index === target && e > 1300 ? 'is-target' : ''}`}><span>{index + 1}</span>{grade}</div>)}</div>
         </div>
 
-        <div className={`mt-5 rounded-2xl border border-[#dce8e2] p-4 transition-all duration-500 sm:p-5 ${e > 1900 ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'}`}>
+        <div className="relative mt-5">
+        <div aria-hidden="true" className={`lp-skeleton absolute inset-0 rounded-2xl border border-[#dce8e2] p-5 transition-opacity duration-500 ${e > 1900 ? 'opacity-0' : 'opacity-100'}`}><i className="w-1/4" /><i className="mt-4 w-2/3" /><i className="mt-3 w-1/2" /><i className="mt-6 w-full" /><i className="mt-2 w-5/6" /><i className="mt-2 w-3/4" /></div>
+        <div className={`rounded-2xl border border-[#dce8e2] p-4 transition-all duration-500 sm:p-5 ${e > 1900 ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'}`}>
           <div className="flex items-center gap-2">
             <span className="rounded-full bg-[#eef4f1] px-2.5 py-1 text-[10px] font-bold tracking-wider text-[#1f6b57]">{t.hero.step}</span>
             {e > 3700 && <span className="lp-tag lp-tag-ai lp-pop">✦ AI</span>}
@@ -99,6 +101,7 @@ function HeroCard() {
             {gain && <span className="rounded-lg bg-[#f3f7f5] px-2.5 py-1.5">{t.hero.expectedGain} <b>{gain.skill} {gain.from} → {gain.to}</b></span>}
             <span className="rounded-lg bg-[#f3f7f5] px-2.5 py-1.5">{t.hero.readinessAfter} <b>{card.readiness_after}%</b></span>
           </div>
+        </div>
         </div>
       </div>
     </div>

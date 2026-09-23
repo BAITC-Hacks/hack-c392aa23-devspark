@@ -56,7 +56,7 @@ export function HrPage({ onSignOut }: { onSignOut: () => void }) {
     <main className="min-h-screen bg-mist px-5 py-8">
       <div className="mx-auto max-w-6xl">
         <header className="topbar">
-          <Link to="/" className="brand" title="Career Quest"><span className="grid h-9 w-9 place-items-center rounded-xl bg-ink text-[#b9e5b4]">↗</span> CAREER QUEST · HR</Link>
+          <Link to="/" className="brand" title="Career Quest"><span>↗</span> CAREER QUEST · HR</Link>
           <button onClick={onSignOut} className="signout">Sign out</button>
         </header>
 
